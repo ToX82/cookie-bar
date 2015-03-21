@@ -30,10 +30,7 @@ function setupCookieBar() {
         if (accepted === undefined) {
             scriptPath = getScriptPath();
 
-            loadAssets();
-            prepareActions();
-            fadeIn(cookieBar, 250);
-            setBodyMargin();
+            startup();
         }
     }
 
@@ -60,7 +57,7 @@ function setupCookieBar() {
      * @param null
      * @return null
      */
-    function loadAssets() {
+    function startup() {
         var userLang = detectLang();
 
         // Load CSS file
@@ -72,12 +69,11 @@ function setupCookieBar() {
 
         // Load the correct language messages file and set some variables
         var request = new XMLHttpRequest();
-        request.open('GET', path + "/lang/" + userLang + ".html", false);
-        request.onload = function () {
-            if (request.status >= 200 && request.status < 400) {
+        request.open('GET', path + "/lang/" + userLang + ".html", true);
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
                 var element = document.createElement('div');
-                var resp = request.responseText;
-                element.innerHTML = resp;
+                element.innerHTML = request.responseText;
                 document.getElementsByTagName('body')[0].appendChild(element);
 
                 cookieBar = document.getElementById('cookie-bar');
@@ -109,6 +105,9 @@ function setupCookieBar() {
                     setBodyMargin("bottom");
                 }
 
+                prepareActions();
+                fadeIn(cookieBar, 250);
+                setBodyMargin();
                 listCookies(cookiesListDiv);
             }
         };
