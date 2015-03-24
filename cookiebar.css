@@ -98,12 +98,32 @@
     cursor: pointer;
 }
 #cookie-bar-prompt hr {
+    background: #FFF;
+    border: none;
+    height: 1px;
     opacity: 0.2;
 }
 #cookie-bar-prompt-content, #cookie-bar {
     color: #FFF;
     font-family: 'Open Sans', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
     font-weight: 300;
+}
+
+#cookie-bar-prompt-content::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #222;
+    background-color: rgba(255,255,255,0.05);
+}
+
+#cookie-bar-prompt-content::-webkit-scrollbar {
+    width: 15px;
+}
+
+#cookie-bar-prompt-content::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background-color: #EEE;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
 }
 
 #cookie-bar-prompt-content a, #cookie-bar a, #cookie-bar-prompt-content span {

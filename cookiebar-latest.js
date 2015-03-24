@@ -3,7 +3,7 @@
     Plugin URL: http://cookiebar.com/
     @author: Emanuele "ToX" Toscano
     @description: Cookie Bar is a free & simple solution to the EU cookie law.
-    @version: 2.0
+    @version: 2.1
 */
 
 /*
@@ -28,27 +28,7 @@ function setupCookieBar() {
     if (document.cookie.length > 0 || window.localStorage.length > 0) {
         var accepted = getCookie("cookiebar");
         if (accepted === undefined) {
-            scriptPath = getScriptPath();
-
             startup();
-        }
-    }
-
-    /**
-     * Get this javascript's path
-     * @param null
-     * @return {String} this javascript's path
-     */
-    function getScriptPath() {
-        var scripts = document.getElementsByTagName("script");
-
-        for (var i = 0; i < scripts.length; i++) {
-            if (scripts[i].hasAttribute("src")) {
-                var path = scripts[i].src;
-                if (path.indexOf("cookiebar") >-1) {
-                    return path;
-                }
-            }
         }
     }
 
@@ -58,6 +38,7 @@ function setupCookieBar() {
      * @return null
      */
     function startup() {
+        scriptPath = getScriptPath();
         var userLang = detectLang();
 
         // Load CSS file
@@ -105,7 +86,7 @@ function setupCookieBar() {
                     setBodyMargin("bottom");
                 }
 
-                prepareActions();
+                setEventListeners();
                 fadeIn(cookieBar, 250);
                 setBodyMargin();
                 listCookies(cookiesListDiv);
@@ -114,6 +95,23 @@ function setupCookieBar() {
         request.send();
     }
 
+    /**
+     * Get this javascript's path
+     * @param null
+     * @return {String} this javascript's path
+     */
+    function getScriptPath() {
+        var scripts = document.getElementsByTagName("script");
+
+        for (var i = 0; i < scripts.length; i++) {
+            if (scripts[i].hasAttribute("src")) {
+                var path = scripts[i].src;
+                if (path.indexOf("cookiebar") >-1) {
+                    return path;
+                }
+            }
+        }
+    }
 
     /**
      * Get browser's language or, if available, the specified one
@@ -130,23 +128,6 @@ function setupCookieBar() {
             userLang = "en";
         }
         return userLang;
-    }
-
-    /**
-     * Get Cookie Bar's cookie if available
-     * @param {string} c_name - cookie name
-     * @return {string} cookie value
-     */
-    function getCookie(c_name) {
-        var i, x, y, ARRcookies = document.cookie.split(";");
-        for (i = 0; i < ARRcookies.length; i++) {
-            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
-            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
-            x = x.replace(/^\s+|\s+$/g, "");
-            if (x == c_name) {
-                return unescape(y);
-            }
-        }
     }
 
     /**
@@ -169,6 +150,23 @@ function setupCookieBar() {
     /**
      * Get Cookie Bar's cookie if available
      * @param {string} c_name - cookie name
+     * @return {string} cookie value
+     */
+    function getCookie(c_name) {
+        var i, x, y, ARRcookies = document.cookie.split(";");
+        for (i = 0; i < ARRcookies.length; i++) {
+            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+            x = x.replace(/^\s+|\s+$/g, "");
+            if (x == c_name) {
+                return unescape(y);
+            }
+        }
+    }
+
+    /**
+     * Write cookieBar's cookie when user accepts cookies :)
+     * @param {string} c_name - cookie name
      * @param {string} value - cookie value
      * @param {string} exdays - expiration days
      * @return null
@@ -181,7 +179,7 @@ function setupCookieBar() {
     }
 
     /**
-     * Remove all the cookies and empty localStorage
+     * Remove all the cookies and empty localStorage when user refuses cookies :(
      * @param null
      * @return null
      */
@@ -229,28 +227,27 @@ function setupCookieBar() {
     }
 
     /**
-     * Add a body tailored bottom margin so that CookieBar doesn't hide anything
+     * Add a body tailored bottom (or top) margin so that CookieBar doesn't hide anything
      * @param null
      * @return null
      */
     function setBodyMargin(where) {    
         setTimeout(function () {
-            var height;
+            var height = document.getElementById("cookie-bar").clientHeight;
+
             switch (where) {
                 case "top": 
-                    height = document.getElementById("cookie-bar").clientHeight;
                     document.getElementsByTagName('body')[0].style.marginTop = height + "px";
                     break;
                 case "bottom":
-                    height = document.getElementById("cookie-bar").clientHeight;
                     document.getElementsByTagName('body')[0].style.marginBottom = height + "px";
                     break;
             }
-        }, 260);
+        }, 300);
     }
 
     /**
-     * GET parameter to look for
+     * Get ul parameter to look for
      * @param {string} name - param name
      * @return {string} param value (false if parameter is not found)
      */
@@ -264,11 +261,11 @@ function setupCookieBar() {
     }
 
     /**
-     * Button actions
+     * Set button actions (event listeners)
      * @param null
      * @return null
      */
-    function prepareActions() {
+    function setEventListeners() {
         button.addEventListener('click', function () {
             setCookie("cookiebar", "CookieAllowed", 30);
             fadeOut(prompt, 250);
@@ -298,5 +295,5 @@ function setupCookieBar() {
 
 // Load the script only if there is at least a cookie or a localStorage item
 document.addEventListener("DOMContentLoaded", function () {
-    setupCookieBar();
+    setupCookieBar(); 
 });
