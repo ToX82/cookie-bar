@@ -31,7 +31,10 @@
     background:      -o-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
     background:     -ms-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
     background:         linear-gradient(to bottom,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
     left: 0;
+    line-height: 1.5;
     margin: 0;
     padding: 3px;
     position: fixed;
@@ -40,6 +43,21 @@
 
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc45484d', endColorstr='#cc000000',GradientType=0 );
 }
+
+#cookie-bar-prompt {
+    background: #000;
+    background: rgba(0,0,0,0.4);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    height: 100%;
+    left: 0;
+    line-height: 1.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9998;
+}
+
 
 #cookie-bar p {
     float: left;
@@ -84,16 +102,6 @@
 }
 
 
-#cookie-bar-prompt {
-    background: #000;
-    background: rgba(0,0,0,0.4);
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9998;
-}
 #cookie-bar-prompt a {
     cursor: pointer;
 }
@@ -101,11 +109,11 @@
     background: #FFF;
     border: none;
     height: 1px;
+    margin: 0.5em 0;
     opacity: 0.2;
 }
 #cookie-bar-prompt-content, #cookie-bar {
     color: #FFF;
-    font-family: 'Open Sans', 'Lucida Grande', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
     font-weight: 300;
 }
 
@@ -174,6 +182,9 @@
     top: 5%;
     width: 600px;
     z-index: 9998;
+}
+#cookie-bar-privacy-page {
+    display: none;
 }
 #cookie-bar-browsers a {
     display: inline-block;

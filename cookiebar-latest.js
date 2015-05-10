@@ -3,7 +3,7 @@
     Plugin URL: http://cookiebar.com/
     @author: Emanuele "ToX" Toscano
     @description: Cookie Bar is a free & simple solution to the EU cookie law.
-    @version: 2.1
+    @version: 1.1
 */
 
 /*
@@ -68,6 +68,9 @@ function setupCookieBar() {
                 promptNoConsent = document.getElementById('cookie-bar-no-consent');
                 cookiesListDiv = document.getElementById('cookies-list');
 
+                detailsLinkText = document.getElementById('cookie-bar-privacy-page');
+                detailsLinkUrl = document.getElementById('cookie-bar-privacy-link');
+
                 if (!getURLParameter("showNoConsent")) {
                     promptNoConsent.style.display = "none";
                     buttonNo.style.display = "none";
@@ -76,6 +79,22 @@ function setupCookieBar() {
                 if (getURLParameter("blocking")) {
                     fadeIn(prompt, 500);
                     promptClose.style.display = "none";
+                }
+
+                if (getURLParameter("privacyPage")) {
+                    var url = decodeURIComponent(getURLParameter("privacyPage"));
+                    promptBtn.href = url;
+                    promptBtn.removeAttribute("id");
+
+                    var detailsBtn = promptBtn.cloneNode(true);
+                    promptBtn.insertAdjacentHTML("afterEnd", detailsBtn.outerHTML);
+
+                    promptBtn.style.display = "none";
+
+                    if (detailsLinkUrl !== null) {
+                        detailsLinkUrl.href = url;
+                        detailsLinkText.style.display = "block";
+                    }
                 }
 
                 if (getURLParameter("top")) {
@@ -252,7 +271,7 @@ function setupCookieBar() {
      * @return {string} param value (false if parameter is not found)
      */
     function getURLParameter(name) {
-        var set = unescape(scriptPath).split(name + "=");
+        var set = scriptPath.split(name + "=");
         if (set[1]) {
             return set[1].split(/[&?]+/)[0];
         } else {
