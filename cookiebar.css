@@ -63,13 +63,20 @@
     float: left;
     margin: 4px 0 0 20px;
     padding: 0;
+    color: #FFF;
+    font-family: sans-serif;
+}
+
+#cookie-bar-prompt p {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFF;
 }
 
 #cookie-bar-button {
     background-color: #36BF2D;
     border-bottom: 1px solid #222;
     border-radius: 5px;
-    color: #FFF!important;
+    color: #FFF !important;
     cursor: pointer;
     display: inline-block;
     float: right;

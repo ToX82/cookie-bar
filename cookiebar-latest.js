@@ -3,7 +3,7 @@
     Plugin URL: http://cookiebar.com/
     @author: Emanuele "ToX" Toscano
     @description: Cookie Bar is a free & simple solution to the EU cookie law.
-    @version: 1.1
+    @version: 1.2
 */
 
 /*
@@ -81,28 +81,25 @@ function setupCookieBar() {
                     promptClose.style.display = "none";
                 }
 
-                if (getURLParameter("privacyPage")) {
-                    var url = decodeURIComponent(getURLParameter("privacyPage"));
-                    promptBtn.href = url;
-                    promptBtn.removeAttribute("id");
-
-                    var detailsBtn = promptBtn.cloneNode(true);
-                    promptBtn.insertAdjacentHTML("afterEnd", detailsBtn.outerHTML);
-
-                    promptBtn.style.display = "none";
-
-                    if (detailsLinkUrl !== null) {
-                        detailsLinkUrl.href = url;
-                        detailsLinkText.style.display = "block";
-                    }
-                }
-
                 if (getURLParameter("top")) {
                     cookieBar.style.top = 0;
                     setBodyMargin("top");
                 } else {
                     cookieBar.style.bottom = 0;
                     setBodyMargin("bottom");
+                }
+
+                if (getURLParameter("privacyPage")) {
+                    var detailsBtn = promptBtn.cloneNode(true);
+                    var url = decodeURIComponent(getURLParameter("privacyPage"));
+                    var text = promptBtn.getAttribute("data-alt");
+
+                    detailsBtn.href = url;
+                    detailsBtn.innerText = text;
+
+                    promptBtn.insertAdjacentHTML("afterEnd", detailsBtn.outerHTML);
+                    promptBtn.style.display = "none";
+                    detailsBtn.style.display = "inline-block";
                 }
 
                 setEventListeners();
