@@ -58,6 +58,12 @@
     z-index: 9998;
 }
 
+#cookie-bar *,
+#cookie-bar-prompt * {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
 
 #cookie-bar p {
     float: left;
@@ -116,7 +122,7 @@
     background: #FFF;
     border: none;
     height: 1px;
-    margin: 0.5em 0;
+    margin: 0.7em 0 1em;
     opacity: 0.2;
 }
 #cookie-bar-prompt-content, #cookie-bar {
@@ -206,7 +212,7 @@
     color: #000 !important;
     display: none;
     left: -10px;
-    opacity: 0.6;
+    opacity: 0.8;
     padding: 3px 10px;
     position: absolute;
     text-align: center;

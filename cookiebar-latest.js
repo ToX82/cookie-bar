@@ -3,7 +3,6 @@
     Plugin URL: http://cookiebar.com/
     @author: Emanuele "ToX" Toscano
     @description: Cookie Bar is a free & simple solution to the EU cookie law.
-    @version: 1.2
 */
 
 /*
@@ -42,11 +41,16 @@ function setupCookieBar() {
         var userLang = detectLang();
 
         // Load CSS file
+        var theme = "";
+        if (getURLParameter("theme")) {
+            theme = "-" + getURLParameter("theme");
+        }
         path = scriptPath.replace(/[^\/]*$/, "");
         var stylesheet = document.createElement("link");
         stylesheet.setAttribute("rel", "stylesheet");
-        stylesheet.setAttribute("href", path + "cookiebar.css");
+        stylesheet.setAttribute("href", path + "cookiebar" + theme + ".css");
         document.head.appendChild(stylesheet);
+        console.log(stylesheet);
 
         // Load the correct language messages file and set some variables
         var request = new XMLHttpRequest();
