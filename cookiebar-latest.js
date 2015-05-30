@@ -1,8 +1,9 @@
 /*
     Plugin Name: Cookie Bar
-    Plugin URL: http://cookiebar.com/
+    Plugin URL: http://cookie-bar.eu/
     @author: Emanuele "ToX" Toscano
     @description: Cookie Bar is a free & simple solution to the EU cookie law.
+    @version: 1.4
 */
 
 /*
@@ -18,16 +19,24 @@ var CookieLanguages = [
  * Main function
  */
 function setupCookieBar() {
+    scriptPath = getScriptPath();
 
     /**
-     * Load plugin only if needed (do nothing if cookiebar cookie is set)
+     * Load plugin only if needed or the "always" parameter is set (do nothing if cookiebar cookie is set)
      * @param null
      * @return null
      */
-    if (document.cookie.length > 0 || window.localStorage.length > 0) {
+    if (getURLParameter("always")) {
         var accepted = getCookie("cookiebar");
         if (accepted === undefined) {
             startup();
+        }
+    } else {
+        if (document.cookie.length > 0 || window.localStorage.length > 0) {
+            var accepted = getCookie("cookiebar");
+            if (accepted === undefined) {
+                startup();
+            }
         }
     }
 
@@ -37,7 +46,6 @@ function setupCookieBar() {
      * @return null
      */
     function startup() {
-        scriptPath = getScriptPath();
         var userLang = detectLang();
 
         // Load CSS file
@@ -50,7 +58,6 @@ function setupCookieBar() {
         stylesheet.setAttribute("rel", "stylesheet");
         stylesheet.setAttribute("href", path + "cookiebar" + theme + ".css");
         document.head.appendChild(stylesheet);
-        console.log(stylesheet);
 
         // Load the correct language messages file and set some variables
         var request = new XMLHttpRequest();
@@ -188,12 +195,16 @@ function setupCookieBar() {
      * Write cookieBar's cookie when user accepts cookies :)
      * @param {string} c_name - cookie name
      * @param {string} value - cookie value
-     * @param {string} exdays - expiration days
      * @return null
      */
-    function setCookie(c_name, value, exdays) {
+    function setCookie(c_name, value) {
+        var exdays = 30;
+        if (getURLParameter("remember")) {
+            exdays = getURLParameter("remember");
+        }
+
         var exdate = new Date();
-        exdate.setDate(exdate.getDate() + exdays);
+        exdate.setDate(exdate.getDate() + parseInt(exdays));
         var c_value = escape(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString());
         document.cookie = c_name + "=" + c_value;
     }
@@ -287,7 +298,7 @@ function setupCookieBar() {
      */
     function setEventListeners() {
         button.addEventListener('click', function () {
-            setCookie("cookiebar", "CookieAllowed", 30);
+            setCookie("cookiebar", "CookieAllowed");
             fadeOut(prompt, 250);
             fadeOut(cookieBar, 250);
         });
