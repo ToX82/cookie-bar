@@ -3,7 +3,7 @@
     Plugin URL: http://cookie-bar.eu/
     @author: Emanuele "ToX" Toscano
     @description: Cookie Bar is a free & simple solution to the EU cookie law.
-    @version: 1.4
+    @version: 1.4.1
 */
 
 /*
@@ -20,6 +20,17 @@ var CookieLanguages = [
  */
 function setupCookieBar() {
     scriptPath = getScriptPath();
+
+
+    /**
+     * If cookies are disallowed, delete all the cookies at every refresh
+     * @param null
+     * @return null
+     */
+    if (getCookie("cookiebar") == "CookieDisallowed") {
+        removeCookie();
+        setCookie("cookiebar", "CookieDisallowed");
+    }
 
     /**
      * Load plugin only if needed or the "always" parameter is set (do nothing if cookiebar cookie is set)
@@ -278,6 +289,22 @@ function setupCookieBar() {
     }
 
     /**
+     * Clear the bottom (or top) margin when the user closes the CookieBar
+     * @param null
+     * @return null
+     */
+    function clearBodyMargin() {
+        var height = document.getElementById("cookie-bar").clientHeight;
+
+
+        if (getURLParameter("top")) {
+            document.getElementsByTagName('body')[0].style.marginTop = -height + "px";
+        } else {
+            document.getElementsByTagName('body')[0].style.marginBottom = -height + "px";
+        }
+    }
+
+    /**
      * Get ul parameter to look for
      * @param {string} name - param name
      * @return {string} param value (false if parameter is not found)
@@ -299,6 +326,7 @@ function setupCookieBar() {
     function setEventListeners() {
         button.addEventListener('click', function () {
             setCookie("cookiebar", "CookieAllowed");
+            clearBodyMargin();
             fadeOut(prompt, 250);
             fadeOut(cookieBar, 250);
         });
@@ -308,6 +336,8 @@ function setupCookieBar() {
             var confirm = window.confirm(txt);
             if (confirm === true) {
                 removeCookie();
+                setCookie("cookiebar", "CookieDisallowed");
+                clearBodyMargin();
                 fadeOut(prompt, 250);
                 fadeOut(cookieBar, 250);
             }
