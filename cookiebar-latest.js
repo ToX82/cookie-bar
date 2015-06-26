@@ -15,6 +15,36 @@ var CookieLanguages = [
     'fr'
 ];
 
+var cookieLawStates = [
+    "BE",
+    "BG",
+    "CZ",
+    "DK",
+    "DE",
+    "EE",
+    "IE",
+    "EL",
+    "ES",
+    "FR",
+    "IT",
+    "CY",
+    "LV",
+    "LT",
+    "LU",
+    "HU",
+    "MT",
+    "NL",
+    "AT",
+    "PL",
+    "PT",
+    "RO",
+    "SI",
+    "SK",
+    "FI",
+    "SE",
+    "UK"
+];
+
 /**
  * Main function
  */
@@ -33,23 +63,39 @@ function setupCookieBar() {
     }
 
     /**
-     * Load plugin only if needed or the "always" parameter is set (do nothing if cookiebar cookie is set)
+     * Load plugin only if needed: 
+     * show if the "always" parameter is set
+     * do nothing if cookiebar cookie is set
+     * show only for european users
      * @param null
      * @return null
      */
-    if (getURLParameter("always")) {
-        var accepted = getCookie("cookiebar");
-        if (accepted === undefined) {
-            startup();
-        }
-    } else {
-        if (document.cookie.length > 0 || window.localStorage.length > 0) {
-            var accepted = getCookie("cookiebar");
-            if (accepted === undefined) {
-                startup();
+    var checkEurope = new XMLHttpRequest();
+    //checkEurope.open('GET', "https://freegeoip.net/json/207.46.13.15", true);
+    checkEurope.open('GET', "https://freegeoip.net/json/", true);
+    checkEurope.onreadystatechange = function () {
+        if (checkEurope.readyState === 4 && checkEurope.status === 200) {
+            var country = JSON.parse(checkEurope.responseText).country_code;
+            if (cookieLawStates.indexOf(country) > -1) {
+                if (getURLParameter("always")) {
+                    var accepted = getCookie("cookiebar");
+                    if (accepted === undefined) {
+                        startup();
+                    }
+                } else {
+                    if (document.cookie.length > 0 || window.localStorage.length > 0) {
+                        var accepted = getCookie("cookiebar");
+                        if (accepted === undefined) {
+                            startup();
+                        }
+                    }
+                }
+            } else {
+                console.log("Not an EU user. cookieBAR is shut down.");
             }
         }
     }
+    checkEurope.send();
 
     /**
      * Load external files (css, language files etc.)
@@ -88,10 +134,13 @@ function setupCookieBar() {
                 promptClose = document.getElementById('cookie-bar-prompt-close');
                 promptContent = document.getElementById('cookie-bar-prompt-content');   
                 promptNoConsent = document.getElementById('cookie-bar-no-consent');
-                cookiesListDiv = document.getElementById('cookies-list');
+                //cookiesListDiv = document.getElementById('cookies-list');
 
-                detailsLinkText = document.getElementById('cookie-bar-privacy-page');
-                detailsLinkUrl = document.getElementById('cookie-bar-privacy-link');
+                tracking = document.getElementById('cookie-bar-thirdparty');
+                thirdparty = document.getElementById('cookie-bar-tracking');
+
+                privacyPage = document.getElementById('cookie-bar-privacy-page');
+                privacyLink = document.getElementById('cookie-bar-privacy-link');
 
                 if (!getURLParameter("showNoConsent")) {
                     promptNoConsent.style.display = "none";
@@ -103,6 +152,14 @@ function setupCookieBar() {
                     promptClose.style.display = "none";
                 }
 
+                if (getURLParameter("thirdparty")) {
+                    thirdparty.style.display = "block";
+                }
+
+                if (getURLParameter("tracking")) {
+                    tracking.style.display = "block";
+                }
+
                 if (getURLParameter("top")) {
                     cookieBar.style.top = 0;
                     setBodyMargin("top");
@@ -112,22 +169,15 @@ function setupCookieBar() {
                 }
 
                 if (getURLParameter("privacyPage")) {
-                    var detailsBtn = promptBtn.cloneNode(true);
                     var url = decodeURIComponent(getURLParameter("privacyPage"));
-                    var text = promptBtn.getAttribute("data-alt");
-
-                    detailsBtn.href = url;
-                    detailsBtn.innerText = text;
-
-                    promptBtn.insertAdjacentHTML("afterEnd", detailsBtn.outerHTML);
-                    promptBtn.style.display = "none";
-                    detailsBtn.style.display = "inline-block";
+                    privacyLink.href = url;
+                    privacyPage.style.display = "inline-block";
                 }
 
                 setEventListeners();
                 fadeIn(cookieBar, 250);
                 setBodyMargin();
-                listCookies(cookiesListDiv);
+                //listCookies(cookiesListDiv);
             }
         };
         request.send();
@@ -172,7 +222,7 @@ function setupCookieBar() {
      * Get a list of all cookies
      * @param NULL
      * @return {array} cookies list
-     */
+     *\/
     function listCookies(cookiesListDiv) {
         var cookies = [];
         var i, x, y, ARRcookies = document.cookie.split(";");
@@ -182,7 +232,10 @@ function setupCookieBar() {
             x = x.replace(/^\s+|\s+$/g, "");
             cookies.push(x);
         }
-        cookiesListDiv.innerHTML = cookies.join(", ");
+
+        if (cookiesListDiv) {
+            cookiesListDiv.innerHTML = cookies.join(", ");
+        }
     }
 
     /**
