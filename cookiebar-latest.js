@@ -49,8 +49,17 @@ var cookieLawStates = [
  * Main function
  */
 function setupCookieBar() {
-    scriptPath = getScriptPath();
-
+    var scriptPath = getScriptPath();
+    var cookieBar
+        ,button
+        ,buttonNo
+        ,prompt
+        ,promptBtn
+        ,promptClose
+        ,promptContent
+        ,promptNoConsent,cookiesListDiv
+        ,detailsLinkText
+        ,detailsLinkUrl;
 
     /**
      * If cookies are disallowed, delete all the cookies at every refresh
@@ -99,7 +108,6 @@ function setupCookieBar() {
 
     /**
      * Load external files (css, language files etc.)
-     * @param null
      * @return null
      */
     function startup() {
@@ -110,7 +118,7 @@ function setupCookieBar() {
         if (getURLParameter("theme")) {
             theme = "-" + getURLParameter("theme");
         }
-        path = scriptPath.replace(/[^\/]*$/, "");
+        var path = scriptPath.replace(/[^\/]*$/, "");
         var stylesheet = document.createElement("link");
         stylesheet.setAttribute("rel", "stylesheet");
         stylesheet.setAttribute("href", path + "cookiebar" + theme + ".css");
@@ -185,7 +193,6 @@ function setupCookieBar() {
 
     /**
      * Get this javascript's path
-     * @param null
      * @return {String} this javascript's path
      */
     function getScriptPath() {
@@ -203,7 +210,6 @@ function setupCookieBar() {
 
     /**
      * Get browser's language or, if available, the specified one
-     * @param null
      * @return {String} userLang - short language name
      */
     function detectLang() {
@@ -220,9 +226,9 @@ function setupCookieBar() {
 
     /**
      * Get a list of all cookies
-     * @param NULL
-     * @return {array} cookies list
-     *\/
+     * @param {HTMLElement} cookiesListDiv
+     * @return {void}
+     */
     function listCookies(cookiesListDiv) {
         var cookies = [];
         var i, x, y, ARRcookies = document.cookie.split(";");
@@ -232,10 +238,7 @@ function setupCookieBar() {
             x = x.replace(/^\s+|\s+$/g, "");
             cookies.push(x);
         }
-
-        if (cookiesListDiv) {
-            cookiesListDiv.innerHTML = cookies.join(", ");
-        }
+        cookiesListDiv.innerHTML = cookies.join(", ");
     }
 
     /**
@@ -250,7 +253,7 @@ function setupCookieBar() {
             y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
             x = x.replace(/^\s+|\s+$/g, "");
             if (x == c_name) {
-                return unescape(y);
+                return decodeURI(y);
             }
         }
     }
@@ -269,13 +272,12 @@ function setupCookieBar() {
 
         var exdate = new Date();
         exdate.setDate(exdate.getDate() + parseInt(exdays));
-        var c_value = escape(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString());
+        var c_value = encodeURI(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString());
         document.cookie = c_name + "=" + c_value;
     }
 
     /**
      * Remove all the cookies and empty localStorage when user refuses cookies :(
-     * @param null
      * @return null
      */
     function removeCookie() {
@@ -293,8 +295,8 @@ function setupCookieBar() {
 
     /**
      * FadeIn effect
-     * @param {string} el - element name
-     * @param {string} speed - effect duration
+     * @param {HTMLElement} el - Element
+     * @param {number} speed - effect duration
      * @return null
      */
     function fadeIn(el, speed) {
@@ -302,15 +304,16 @@ function setupCookieBar() {
         s.opacity = 0;
         s.display = "block";
         (function fade() {
-            (s.opacity -= -0.1) > 0.9 ? null : setTimeout(fade, (speed/10));
+            if((s.opacity -= -0.1) <= 0.9 )
+                setTimeout(fade, (speed/10));
         })();
     }
 
 
     /**
      * FadeOut effect
-     * @param {string} el - element name
-     * @param {string} speed - effect duration
+     * @param {HTMLElement} el - Element
+     * @param {number} speed - effect duration
      * @return null
      */
     function fadeOut(el, speed) {
@@ -323,7 +326,7 @@ function setupCookieBar() {
 
     /**
      * Add a body tailored bottom (or top) margin so that CookieBar doesn't hide anything
-     * @param null
+     * @param {String} where
      * @return null
      */
     function setBodyMargin(where) {    
@@ -343,7 +346,6 @@ function setupCookieBar() {
 
     /**
      * Clear the bottom (or top) margin when the user closes the CookieBar
-     * @param null
      * @return null
      */
     function clearBodyMargin() {
@@ -360,7 +362,7 @@ function setupCookieBar() {
     /**
      * Get ul parameter to look for
      * @param {string} name - param name
-     * @return {string} param value (false if parameter is not found)
+     * @return {String|Boolean} param value (false if parameter is not found)
      */
     function getURLParameter(name) {
         var set = scriptPath.split(name + "=");
@@ -373,7 +375,6 @@ function setupCookieBar() {
 
     /**
      * Set button actions (event listeners)
-     * @param null
      * @return null
      */
     function setEventListeners() {
