@@ -294,7 +294,7 @@ function setupCookieBar() {
 
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + parseInt(exdays));
-    var cValue = encodeURI(value) + ((exdays === null) ? '' : '; expires=' + exdate.toUTCString());
+    var cValue = encodeURI(value) + ((exdays === null) ? '' : '; expires=' + exdate.toUTCString() + ';path=/');
     document.cookie = name + '=' + cValue;
   }
 
