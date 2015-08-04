@@ -35,9 +35,9 @@ Currently, the supported languages for Cookie Bar are:
 
 * it - Italian
 * en - English
+* de - German
 * fr - French
 * hu - Hungarian
-* de - German
 
 The user language is automatically detected by the browser, but you can force a specific language by passing an optional parameter (see below).
 
@@ -46,7 +46,7 @@ The user language is automatically detected by the browser, but you can force a 
 You have two options here:
 <ol>
 	<li>Use the hosted version (work in progress, you will see the link here ASAP)</li>
-	<li>Or, 
+	<li>Or,
 		<ol>
 			<li>Grab the Github repo and place it somewhere in a folder within your website. All of the files, including images and stylesheets, need to maintain it's relative structure - that is be in the same directory - for the plugin to work correctly.</li>
 			<li>Put the code you have seen in TL;DR section somewhere on all relevant pages of your website.</li>
@@ -63,4 +63,4 @@ You have two options here:
     forceYes=1 <= hides deny consent button and text
     forceLang=XX <= force a specific language
     blocking=1 <= blocks all the page until the user clicks deny or consent cookies
-    
+
