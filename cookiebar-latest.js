@@ -12,7 +12,8 @@
 var CookieLanguages = [
   'en',
   'it',
-  'fr'
+  'fr',
+  'hu'
 ];
 
 var cookieLawStates = [
