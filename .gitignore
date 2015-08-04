@@ -1,5 +1,7 @@
 .DS_Store
 index.php
+privacy.php
+favicon.ico
 .gitignore
 .htaccess
 

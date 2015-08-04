@@ -3,7 +3,7 @@
   Plugin URL: http://cookie-bar.eu/
   @author: Emanuele "ToX" Toscano
   @description: Cookie Bar is a free & simple solution to the EU cookie law.
-  @version: 1.5.0.2
+  @version: 1.5.1
 */
 
 /*
@@ -68,7 +68,7 @@ function setupCookieBar() {
    * @param null
    * @return null
    */
-  if (getCookie('cookiebar') == 'CookieDisallowed') {
+  if (getCookie() == 'CookieDisallowed') {
     removeCookie();
     setCookie('cookiebar', 'CookieDisallowed');
   }
@@ -90,13 +90,13 @@ function setupCookieBar() {
       var country = JSON.parse(checkEurope.responseText).country_code;
       if (cookieLawStates.indexOf(country) > -1) {
         if (getURLParameter('always')) {
-          var accepted = getCookie('cookiebar');
+          var accepted = getCookie();
           if (accepted === undefined) {
             startup();
           }
         } else {
           if (document.cookie.length > 0 || window.localStorage.length > 0) {
-            var accepted = getCookie('cookiebar');
+            var accepted = getCookie();
             if (accepted === undefined) {
               startup();
             }
@@ -122,7 +122,7 @@ function setupCookieBar() {
     console.log('cookieBAR - Timeout for freegeoip');
 
     if (document.cookie.length > 0 || window.localStorage.length > 0) {
-      var accepted = getCookie('cookiebar');
+      var accepted = getCookie();
       if (accepted === undefined) {
         startup();
       }
@@ -265,18 +265,15 @@ function setupCookieBar() {
 
   /**
    * Get Cookie Bar's cookie if available
-   * @param {string} name - cookie name
    * @return {string} cookie value
    */
-  function getCookie(name) {
-    var i, x, y, ARRcookies = document.cookie.split(';');
-    for (i = 0; i < ARRcookies.length; i++) {
-      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
-      y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
-      x = x.replace(/^\s+|\s+$/g, '');
-      if (x == name) {
-        return decodeURI(y);
-      }
+  function getCookie() {
+    var cookieValue = document.cookie.match(/(;)?cookiebar=([^;]*);?/);
+
+    if (cookieValue == null) {
+      return undefined;
+    } else {
+      return decodeURI(cookieValue)[2];
     }
   }
 
@@ -299,7 +296,7 @@ function setupCookieBar() {
   }
 
   /**
-   * Remove all the cookies and empty localStorage when user refuses cookies :(
+   * Remove all the cookies and empty localStorage when user refuses cookies
    * @return null
    */
   function removeCookie() {
