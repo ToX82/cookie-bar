@@ -37,6 +37,7 @@ Currently, the supported languages for Cookie Bar are:
 * en - English
 * fr - French
 * hu - Hungarian
+* de - German
 
 The user language is automatically detected by the browser, but you can force a specific language by passing an optional parameter (see below).
 
