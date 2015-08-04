@@ -409,7 +409,7 @@ function setupCookieBar() {
     });
 
     buttonNo.addEventListener('click', function() {
-      var txt = promptNoConsent.innerText;
+      var txt = promptNoConsent.textContent.trim();
       var confirm = window.confirm(txt);
       if (confirm === true) {
         removeCookie();
