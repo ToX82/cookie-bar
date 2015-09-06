@@ -147,7 +147,7 @@ function setupCookieBar() {
     var path = scriptPath.replace(/[^\/]*$/, '');
     var stylesheet = document.createElement('link');
     stylesheet.setAttribute('rel', 'stylesheet');
-    stylesheet.setAttribute('href', path + 'cookiebar' + theme + '.css');
+    stylesheet.setAttribute('href', path + 'cookiebar' + theme + '.min.css');
     document.head.appendChild(stylesheet);
 
     // Load the correct language messages file and set some variables
