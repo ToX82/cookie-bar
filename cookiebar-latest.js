@@ -3,7 +3,7 @@
   Plugin URL: http://cookie-bar.eu/
   @author: Emanuele "ToX" Toscano
   @description: Cookie Bar is a free & simple solution to the EU cookie law.
-  @version: 1.5.2
+  @version: 1.5.3
 */
 
 /*
@@ -44,7 +44,7 @@ var cookieLawStates = [
   'SK',
   'FI',
   'SE',
-  'UK'
+  'GB'
 ];
 
 
@@ -373,9 +373,11 @@ function setupCookieBar() {
     var height = document.getElementById('cookie-bar').clientHeight;
 
     if (getURLParameter('top')) {
-      document.getElementsByTagName('body')[0].style.marginTop = -height + 'px';
+      var currentTop = parseInt(document.getElementsByTagName('body')[0].style.marginTop);
+      document.getElementsByTagName('body')[0].style.marginTop = currentTop - height + 'px';
     } else {
-      document.getElementsByTagName('body')[0].style.marginBottom = -height + 'px';
+      var currentBottom = parseInt(document.getElementsByTagName('body')[0].style.marginBottom);
+      document.getElementsByTagName('body')[0].style.marginBottom = currentBottom -height + 'px';
     }
   }
 
