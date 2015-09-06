@@ -71,7 +71,7 @@ function setupCookieBar() {
    * @return null
    */
   if (getCookie() == 'CookieDisallowed') {
-    removeCookie();
+    removeCookies();
     setCookie('cookiebar', 'CookieDisallowed');
   }
 
@@ -301,7 +301,7 @@ function setupCookieBar() {
    * Remove all the cookies and empty localStorage when user refuses cookies
    * @return null
    */
-  function removeCookie() {
+  function removeCookies() {
     // Clear cookies
     document.cookie.split(';')
       .forEach(function(c) {
@@ -411,7 +411,7 @@ function setupCookieBar() {
       var txt = promptNoConsent.textContent.trim();
       var confirm = window.confirm(txt);
       if (confirm === true) {
-        removeCookie();
+        removeCookies();
         setCookie('cookiebar', 'CookieDisallowed');
         clearBodyMargin();
         fadeOut(prompt, 250);
