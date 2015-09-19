@@ -85,7 +85,7 @@ function setupCookieBar() {
    */
   var checkEurope = new XMLHttpRequest();
 
-  checkEurope.open('GET', 'http://www.telize.com/geoip', true);
+  checkEurope.open('GET', '//www.telize.com/geoip', true);
   checkEurope.onreadystatechange = function() {
     if (checkEurope.readyState === 4 && checkEurope.status === 200) {
       clearTimeout(xmlHttpTimeout);
