@@ -3,7 +3,7 @@
   Plugin URL: http://cookie-bar.eu/
   @author: Emanuele "ToX" Toscano
   @description: Cookie Bar is a free & simple solution to the EU cookie law.
-  @version: 1.5.4
+  @version: 1.5.5
 */
 
 /*
@@ -85,7 +85,7 @@ function setupCookieBar() {
    */
   var checkEurope = new XMLHttpRequest();
 
-  checkEurope.open('GET', '//www.telize.com/geoip', true);
+  checkEurope.open('GET', '//freegeoip.net/json/', true);
   checkEurope.onreadystatechange = function() {
     if (checkEurope.readyState === 4 && checkEurope.status === 200) {
       clearTimeout(xmlHttpTimeout);
@@ -114,14 +114,14 @@ function setupCookieBar() {
 
   /*
   * Using an external service for geoip localization could be a long task
-  * If it takes more than 1 second, start normally
+  * If it takes more than 1.5 second, start normally
   * @param null
   * @return null
   */
   var xmlHttpTimeout = setTimeout(ajaxTimeout, 1500);
   function ajaxTimeout() {
     checkEurope.abort();
-    console.log('cookieBAR - Timeout for ip geolocalion');
+    console.log('cookieBAR - Timeout for ip geolocation');
 
     if (document.cookie.length > 0 || window.localStorage.length > 0) {
       var accepted = getCookie();
