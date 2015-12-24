@@ -3,18 +3,20 @@
   Plugin URL: http://cookie-bar.eu/
   @author: Emanuele "ToX" Toscano
   @description: Cookie Bar is a free & simple solution to the EU cookie law.
-  @version: 1.5.8
+  @version: 1.5.9
 */
 
 /*
  * Available languages array
  */
 var CookieLanguages = [
+  'ca',
+  'de',
   'en',
-  'it',
+  'es',
   'fr',
   'hu',
-  'de',
+  'it',
   'nl'
 ];
 
