@@ -278,7 +278,7 @@ function setupCookieBar() {
     if (cookieValue == null) {
       return undefined;
     } else {
-      return decodeURI(cookieValue)[2];
+      return decodeURI(cookieValue[2]);
     }
   }
 
