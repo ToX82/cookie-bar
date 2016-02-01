@@ -354,16 +354,20 @@ function setupCookieBar() {
    * @param {String} where
    * @return null
    */
-  function setBodyMargin(where) {
-    setTimeout(function() {
+   function setBodyMargin(where) {
+      setTimeout(function () {
+
       var height = document.getElementById('cookie-bar').clientHeight;
+
+      var bodyEl = document.getElementsByTagName('body')[0];
+      var bodyStyle = bodyEl.currentStyle || window.getComputedStyle(bodyEl);
 
       switch (where) {
         case 'top':
-          document.getElementsByTagName('body')[0].style.marginTop = height + 'px';
+          bodyEl.style.marginTop = (parseInt(bodyStyle.marginTop) + height) + 'px';
           break;
         case 'bottom':
-          document.getElementsByTagName('body')[0].style.marginBottom = height + 'px';
+          bodyEl.style.marginBottom = (parseInt(bodyStyle.marginBottom) + height) + 'px';
           break;
       }
     }, 300);
