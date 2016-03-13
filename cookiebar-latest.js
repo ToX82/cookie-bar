@@ -68,6 +68,8 @@ function setupCookieBar() {
   var cookiesListDiv;
   var detailsLinkText;
   var detailsLinkUrl;
+  var startup = false;
+  var shutup = false;
 
   /**
    * If cookies are disallowed, delete all the cookies at every refresh
@@ -87,52 +89,51 @@ function setupCookieBar() {
    * @param null
    * @return null
    */
-  var checkEurope = new XMLHttpRequest();
 
+  // If the user is in EU, then STARTUP
+  var checkEurope = new XMLHttpRequest();
   checkEurope.open('GET', '//freegeoip.net/json/', true);
   checkEurope.onreadystatechange = function() {
     if (checkEurope.readyState === 4 && checkEurope.status === 200) {
       clearTimeout(xmlHttpTimeout);
       var country = JSON.parse(checkEurope.responseText).country_code;
       if (cookieLawStates.indexOf(country) > -1) {
-        if (getURLParameter('always')) {
-          var accepted = getCookie();
-          if (accepted === undefined) {
-            startup();
-          }
-        } else {
-          if (document.cookie.length > 0 || window.localStorage.length > 0) {
-            var accepted = getCookie();
-            if (accepted === undefined) {
-              startup();
-            }
-          }
-        }
+        startup = true;
       } else {
-        console.log('cookieBAR - Not an EU user, no cookieBAR.');
+        shutup = true;
       }
     }
-  }
-
-  checkEurope.send();
+  };
 
   /*
   * Using an external service for geoip localization could be a long task
   * If it takes more than 1.5 second, start normally
-  * @param null
-  * @return null
   */
   var xmlHttpTimeout = setTimeout(ajaxTimeout, 1500);
   function ajaxTimeout() {
-    checkEurope.abort();
     console.log('cookieBAR - Timeout for ip geolocation');
+    checkEurope.abort();
+    startup = true;
+  }
+  checkEurope.send();
 
-    if (document.cookie.length > 0 || window.localStorage.length > 0) {
-      var accepted = getCookie();
-      if (accepted === undefined) {
-        startup();
-      }
+  // If at least a cookie or localstorage is set, then STARTUP
+  if (document.cookie.length > 0 || window.localStorage.length > 0) {
+    var accepted = getCookie();
+    if (accepted === undefined) {
+      startup = true;
+    } else {
+      shutup = true;
     }
+  }
+
+  // If cookieBAR should always be show, then STARTUP
+  if (getURLParameter('always')) {
+    startup = true;
+  }
+
+  if (startup === true && shutup === false) {
+    startCookieBar();
   }
 
 
@@ -140,7 +141,7 @@ function setupCookieBar() {
    * Load external files (css, language files etc.)
    * @return null
    */
-  function startup() {
+  function startCookieBar() {
     var userLang = detectLang();
 
     // Load CSS file
@@ -149,9 +150,10 @@ function setupCookieBar() {
       theme = '-' + getURLParameter('theme');
     }
     var path = scriptPath.replace(/[^\/]*$/, '');
+    var minified = (scriptPath.indexOf('.min') > -1) ? '.min' : '';
     var stylesheet = document.createElement('link');
     stylesheet.setAttribute('rel', 'stylesheet');
-    stylesheet.setAttribute('href', path + 'cookiebar' + theme + '.css');
+    stylesheet.setAttribute('href', path + 'cookiebar' + theme + minified + '.css');
     document.head.appendChild(stylesheet);
 
     // Load the correct language messages file and set some variables
@@ -176,6 +178,7 @@ function setupCookieBar() {
         thirdparty = document.getElementById('cookie-bar-thirdparty');
         tracking = document.getElementById('cookie-bar-tracking');
 
+        scrolling = document.getElementById('cookie-bar-scrolling');
         privacyPage = document.getElementById('cookie-bar-privacy-page');
         privacyLink = document.getElementById('cookie-bar-privacy-link');
 
@@ -195,6 +198,10 @@ function setupCookieBar() {
 
         if (getURLParameter('tracking')) {
           tracking.style.display = 'block';
+        }
+
+        if (getURLParameter('scrolling')) {
+          scrolling.style.display = 'inline-block';
         }
 
         if (getURLParameter('top')) {
@@ -226,9 +233,9 @@ function setupCookieBar() {
   function getScriptPath() {
     var scripts = document.getElementsByTagName('script');
 
-    for (var i = 0; i < scripts.length; i++) {
+    for (i = 0; i < scripts.length; i += 1) {
       if (scripts[i].hasAttribute('src')) {
-        var path = scripts[i].src;
+        path = scripts[i].src;
         if (path.indexOf('cookiebar') > -1) {
           return path;
         }
@@ -260,7 +267,7 @@ function setupCookieBar() {
   function listCookies(cookiesListDiv) {
     var cookies = [];
     var i, x, y, ARRcookies = document.cookie.split(';');
-    for (i = 0; i < ARRcookies.length; i++) {
+    for (i = 0; i < ARRcookies.length; i += 1) {
       x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
       y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
       x = x.replace(/^\s+|\s+$/g, '');
@@ -307,12 +314,9 @@ function setupCookieBar() {
    */
   function removeCookies() {
     // Clear cookies
-    document.cookie.split(';')
-      .forEach(function(c) {
-        document.cookie = c.replace(/^ +/, '')
-          .replace(/=.*/, '=;expires=' + new Date()
-            .toUTCString() + ';path=/');
-      });
+    document.cookie.split(';').forEach(function(c) {
+      document.cookie = c.replace(/^\ +/, '').replace(/\=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+    });
 
     // Clear localStorage
     localStorage.clear();
@@ -434,6 +438,22 @@ function setupCookieBar() {
     promptClose.addEventListener('click', function() {
       fadeOut(prompt, 250);
     });
+
+    if (getURLParameter('scrolling')) {
+      var scrollPos = document.body.getBoundingClientRect().top;
+      var scrolled = false;
+      window.addEventListener('scroll', function() {
+        if (scrolled === false) {
+          if (document.body.getBoundingClientRect().top - scrollPos > 250 || document.body.getBoundingClientRect().top - scrollPos < -250) {
+            setCookie('cookiebar', 'CookieAllowed');
+            clearBodyMargin();
+            fadeOut(prompt, 250);
+            fadeOut(cookieBar, 250);
+            scrolled = true;
+          }
+        }
+      });
+    }
   }
 }
 
