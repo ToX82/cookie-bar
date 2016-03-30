@@ -18,7 +18,8 @@ var CookieLanguages = [
   'hu',
   'it',
   'nl',
-  'pt'
+  'pt',
+  'cu' // Custom: create your own cu.html
 ];
 
 var cookieLawStates = [
@@ -70,6 +71,23 @@ function setupCookieBar() {
   var detailsLinkUrl;
   var startup = false;
   var shutup = false;
+  var otherCookie = false;
+
+  /**
+   * check if another cookie is set
+   * usesful if you migrated from another service like iubenda
+   */
+
+   if (getURLParameter('migratedCookie')) {
+    otherCookie = getURLParameter('migratedCookie');
+    if (getCookieByName(otherCookie) != "") {
+       console.log('Found other cookie');
+       shutup = true;
+       return;
+    }
+
+   }
+
 
   /**
    * If cookies are disallowed, delete all the cookies at every refresh
@@ -91,31 +109,35 @@ function setupCookieBar() {
    */
 
   // If the user is in EU, then STARTUP
-  var checkEurope = new XMLHttpRequest();
-  checkEurope.open('GET', '//freegeoip.net/json/', true);
-  checkEurope.onreadystatechange = function() {
-    if (checkEurope.readyState === 4 && checkEurope.status === 200) {
-      clearTimeout(xmlHttpTimeout);
-      var country = JSON.parse(checkEurope.responseText).country_code;
-      if (cookieLawStates.indexOf(country) > -1) {
-        startup = true;
-      } else {
-        shutup = true;
+  // if checkGeoIP is not set then do not check IP location (faster)
+  if (getURLParameter('checkGeoIP')) {
+    var checkEurope = new XMLHttpRequest();
+    var checkGeoIP = 1;
+    checkEurope.open('GET', '//freegeoip.net/json/', true);
+    checkEurope.onreadystatechange = function() {
+      if (checkEurope.readyState === 4 && checkEurope.status === 200) {
+        clearTimeout(xmlHttpTimeout);
+        var country = JSON.parse(checkEurope.responseText).country_code;
+        if (cookieLawStates.indexOf(country) > -1) {
+          startup = true;
+        } else {
+          shutup = true;
+        }
       }
     }
-  };
 
-  /*
-  * Using an external service for geoip localization could be a long task
-  * If it takes more than 1.5 second, start normally
-  */
-  var xmlHttpTimeout = setTimeout(ajaxTimeout, 1500);
-  function ajaxTimeout() {
-    console.log('cookieBAR - Timeout for ip geolocation');
-    checkEurope.abort();
-    startup = true;
-  }
+    /*
+    * Using an external service for geoip localization could be a long task
+    * If it takes more than 1.5 second, start normally
+    */
+    var xmlHttpTimeout = setTimeout(ajaxTimeout, 1500);
+    function ajaxTimeout() {
+      console.log('cookieBAR - Timeout for ip geolocation');
+      checkEurope.abort(); 
+      startup = true;
+    }
   checkEurope.send();
+  }
 
   // If at least a cookie or localstorage is set, then STARTUP
   if (document.cookie.length > 0 || window.localStorage.length > 0) {
@@ -182,29 +204,31 @@ function setupCookieBar() {
         privacyPage = document.getElementById('cookie-bar-privacy-page');
         privacyLink = document.getElementById('cookie-bar-privacy-link');
 
-        if (!getURLParameter('showNoConsent')) {
+        migratedCookie = document.getElementById('cookie-bar-migrated-cookie');
+
+        if (!getURLParameter('showNoConsent')&&(promptNoConsent)&&(buttonNo)) {
           promptNoConsent.style.display = 'none';
           buttonNo.style.display = 'none';
         }
 
-        if (getURLParameter('blocking')) {
+        if (getURLParameter('blocking')&&(promptClose)) {
           fadeIn(prompt, 500);
           promptClose.style.display = 'none';
         }
 
-        if (getURLParameter('thirdparty')) {
+        if (getURLParameter('thirdparty')&&(thirdparty)) {
           thirdparty.style.display = 'block';
         }
 
-        if (getURLParameter('tracking')) {
+        if (getURLParameter('tracking')&&(tracking)) {
           tracking.style.display = 'block';
         }
 
-        if (getURLParameter('scrolling')) {
+        if (getURLParameter('scrolling')&&(scrolling)) {
           scrolling.style.display = 'inline-block';
         }
 
-        if (getURLParameter('top')) {
+        if (getURLParameter('top')&&(cookieBar)) {
           cookieBar.style.top = 0;
           setBodyMargin('top');
         } else {
@@ -212,7 +236,7 @@ function setupCookieBar() {
           setBodyMargin('bottom');
         }
 
-        if (getURLParameter('privacyPage')) {
+        if (getURLParameter('privacyPage')&&(privacyLink)&&(privacyPage)) {
           var url = decodeURIComponent(getURLParameter('privacyPage'));
           privacyLink.href = url;
           privacyPage.style.display = 'inline-block';
@@ -288,6 +312,18 @@ function setupCookieBar() {
     } else {
       return decodeURI(cookieValue[2]);
     }
+  }
+
+/* check a cookie by name */
+  function getCookieByName(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1);
+          if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+      }
+      return "";
   }
 
   /**
@@ -419,25 +455,31 @@ function setupCookieBar() {
       fadeOut(cookieBar, 250);
     });
 
-    buttonNo.addEventListener('click', function() {
-      var txt = promptNoConsent.textContent.trim();
-      var confirm = window.confirm(txt);
-      if (confirm === true) {
-        removeCookies();
-        setCookie('cookiebar', 'CookieDisallowed');
-        clearBodyMargin();
+    if (buttonNo) {
+      buttonNo.addEventListener('click', function() {
+        var txt = promptNoConsent.textContent.trim();
+        var confirm = window.confirm(txt);
+        if (confirm === true) {
+          removeCookies();
+          setCookie('cookiebar', 'CookieDisallowed');
+          clearBodyMargin();
+          fadeOut(prompt, 250);
+          fadeOut(cookieBar, 250);
+        }
+      });
+    }
+
+    if (promptBtn) {
+      promptBtn.addEventListener('click', function() {
+        fadeIn(prompt, 250);
+      });
+    }
+
+    if (promptClose) {
+      promptClose.addEventListener('click', function() {
         fadeOut(prompt, 250);
-        fadeOut(cookieBar, 250);
-      }
-    });
-
-    promptBtn.addEventListener('click', function() {
-      fadeIn(prompt, 250);
-    });
-
-    promptClose.addEventListener('click', function() {
-      fadeOut(prompt, 250);
-    });
+      });
+    }
 
     if (getURLParameter('scrolling')) {
       var scrollPos = document.body.getBoundingClientRect().top;
@@ -461,3 +503,4 @@ function setupCookieBar() {
 document.addEventListener('DOMContentLoaded', function() {
   setupCookieBar();
 });
+
