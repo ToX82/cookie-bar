@@ -93,7 +93,7 @@ function setupCookieBar() {
 
   // If the user is in EU, then STARTUP
   var checkEurope = new XMLHttpRequest();
-  checkEurope.open('GET', '//freegeoip.net/json/', true);
+  checkEurope.open('GET', '//freegeoip.io/json/', true);
   checkEurope.onreadystatechange = function() {
     if (checkEurope.readyState === 4 && checkEurope.status === 200) {
       clearTimeout(xmlHttpTimeout);
