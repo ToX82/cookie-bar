@@ -11,6 +11,7 @@
  */
 var CookieLanguages = [
   'ca',
+  'da',
   'de',
   'en',
   'es',
