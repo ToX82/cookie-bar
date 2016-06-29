@@ -50,7 +50,8 @@ var cookieLawStates = [
   'SK',
   'FI',
   'SE',
-  'GB'
+  'GB',
+  'HR'
 ];
 
 
