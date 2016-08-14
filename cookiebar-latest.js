@@ -11,6 +11,7 @@
  */
 var CookieLanguages = [
   'ca',
+  'da',
   'de',
   'en',
   'es',
@@ -49,7 +50,8 @@ var cookieLawStates = [
   'SK',
   'FI',
   'SE',
-  'GB'
+  'GB',
+  'HR'
 ];
 
 
