@@ -71,6 +71,7 @@ function setupCookieBar() {
   var cookiesListDiv;
   var detailsLinkText;
   var detailsLinkUrl;
+  var refreshPage = false;
   var startup = false;
   var shutup = false;
 
@@ -219,6 +220,10 @@ function setupCookieBar() {
           var url = decodeURIComponent(getURLParameter('privacyPage'));
           privacyLink.href = url;
           privacyPage.style.display = 'inline-block';
+        }
+
+        if (getURLParameter('refreshPage')) {
+          refreshPage = true;
         }
 
         setEventListeners();
@@ -420,6 +425,9 @@ function setupCookieBar() {
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
+      if (refreshPage === true) {
+        window.location.reload();
+      }
     });
 
     buttonNo.addEventListener('click', function() {
