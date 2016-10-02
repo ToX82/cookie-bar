@@ -419,6 +419,9 @@ function setupCookieBar() {
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
+      if (getURLParameter('refreshPage')) {
+          window.location.reload();
+      }
     });
 
     buttonNo.addEventListener('click', function() {
@@ -452,6 +455,9 @@ function setupCookieBar() {
             fadeOut(prompt, 250);
             fadeOut(cookieBar, 250);
             scrolled = true;
+            if (getURLParameter('refreshPage')) {
+                window.location.reload();
+            }
           }
         }
       });
