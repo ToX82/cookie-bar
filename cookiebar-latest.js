@@ -10,6 +10,7 @@
  */
 var CookieLanguages = [
   'ca',
+  'cs',
   'da',
   'de',
   'en',
@@ -19,38 +20,39 @@ var CookieLanguages = [
   'it',
   'nl',
   'pt',
-  'ro'
+  'ro',
+  'sj'
 ];
 
 var cookieLawStates = [
+  'AT',
   'BE',
   'BG',
+  'CY',
   'CZ',
-  'DK',
   'DE',
+  'DK',
   'EE',
-  'IE',
   'EL',
   'ES',
+  'FI',
   'FR',
+  'GB',
+  'HR',
+  'HU',
+  'IE',
   'IT',
-  'CY',
-  'LV',
   'LT',
   'LU',
-  'HU',
+  'LV',
   'MT',
   'NL',
-  'AT',
   'PL',
   'PT',
   'RO',
-  'SI',
-  'SK',
-  'FI',
   'SE',
-  'GB',
-  'HR'
+  'SI',
+  'SK'
 ];
 
 
