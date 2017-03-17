@@ -162,7 +162,7 @@ function setupCookieBar() {
 
     // Load the correct language messages file and set some variables
     var request = new XMLHttpRequest();
-    request.open('GET', path + '/lang/' + userLang + '.html', true);
+    request.open('GET', path + 'lang/' + userLang + '.html', true);
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
         var element = document.createElement('div');
