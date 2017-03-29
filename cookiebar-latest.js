@@ -76,14 +76,23 @@ function setupCookieBar() {
   var startup = false;
   var shutup = false;
 
+  // Get the users current cookie selection
+  var currentCookieSelection = getCookie();
+
   /**
    * If cookies are disallowed, delete all the cookies at every refresh
    * @param null
    * @return null
    */
-  if (getCookie() == 'CookieDisallowed') {
+  if (currentCookieSelection == 'CookieDisallowed') {
     removeCookies();
     setCookie('cookiebar', 'CookieDisallowed');
+  }
+
+  // Stop further execution,
+  // if the user already allowed / disallowed cookie usage.
+  if (currentCookieSelection !== undefined) {
+    return;
   }
 
   /**
