@@ -21,7 +21,8 @@ var CookieLanguages = [
   'nl',
   'pt',
   'ro',
-  'sk'
+  'se',
+  'sk',
 ];
 
 var cookieLawStates = [
