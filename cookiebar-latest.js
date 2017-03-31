@@ -104,52 +104,92 @@ function setupCookieBar() {
    * @return null
    */
 
-  // If the user is in EU, then STARTUP
-  var checkEurope = new XMLHttpRequest();
-  checkEurope.open('GET', '//freegeoip.io/json/', true);
-  checkEurope.onreadystatechange = function() {
-    if (checkEurope.readyState === 4 && checkEurope.status === 200) {
+  // Init cookieBAR without geoip localization, if it was explicitly disabled.
+  if (getURLParameter('noGeoIp')) {
+    startup = true;
+    initCookieBar();
+  }
+
+  // Otherwise execute geoip localization and init cookieBAR afterwards.
+  else {
+    // If the user is in EU, then STARTUP
+    var checkEurope = new XMLHttpRequest();
+    checkEurope.open('GET', '//freegeoip.io/json/', true);
+    checkEurope.onreadystatechange = function() {
+      // Don't process anything else besides finished requests.
+      if (checkEurope.readyState !== 4) {
+        return;
+      }
+
+      // Immediately clear timeout handler in order to avoid multiple executions.
       clearTimeout(xmlHttpTimeout);
-      var country = JSON.parse(checkEurope.responseText).country_code;
-      if (cookieLawStates.indexOf(country) > -1) {
+
+      // Process response on case of a successful request.
+      if (checkEurope.status === 200) {
+        var country = JSON.parse(checkEurope.responseText).country_code;
+        if (cookieLawStates.indexOf(country) > -1) {
+          startup = true;
+        } else {
+          shutup = true;
+        }
+      }
+
+      // Enforce startup, if the webservice returned an error.
+      else {
+        startup = true;
+      }
+
+      // Init cookieBAR after geoip localization was finished.
+      initCookieBar();
+    };
+
+    /*
+     * Using an external service for geoip localization could be a long task
+     * If it takes more than 1.5 second, start normally
+     */
+    var xmlHttpTimeout = setTimeout(function () {
+      console.log('cookieBAR - Timeout for ip geolocation');
+
+      // Make sure, that checkEurope.onreadystatechange() is not called anymore
+      // in order to avoid possible multiple executions of initCookieBar().
+      checkEurope.onreadystatechange = function() {};
+
+      // Abort geoip localization.
+      checkEurope.abort();
+
+      // Init cookieBAR after geoip localization was aborted.
+      startup = true;
+      initCookieBar();
+    }, 1500);
+
+    checkEurope.send();
+  }
+
+
+  /**
+   * Initialize cookieBAR according to the startup / shutup values.
+   * @return null
+   */
+  function initCookieBar() {
+    // If at least a cookie or localstorage is set, then STARTUP
+    if (document.cookie.length > 0 || window.localStorage.length > 0) {
+      var accepted = getCookie();
+      if (accepted === undefined) {
         startup = true;
       } else {
         shutup = true;
       }
     }
-  };
 
-  /*
-  * Using an external service for geoip localization could be a long task
-  * If it takes more than 1.5 second, start normally
-  */
-  var xmlHttpTimeout = setTimeout(ajaxTimeout, 1500);
-  function ajaxTimeout() {
-    console.log('cookieBAR - Timeout for ip geolocation');
-    checkEurope.abort();
-    startup = true;
-  }
-  checkEurope.send();
-
-  // If at least a cookie or localstorage is set, then STARTUP
-  if (document.cookie.length > 0 || window.localStorage.length > 0) {
-    var accepted = getCookie();
-    if (accepted === undefined) {
+    // If cookieBAR should always be show, then STARTUP
+    if (getURLParameter('always')) {
       startup = true;
-    } else {
-      shutup = true;
+    }
+
+    if (startup === true && shutup === false) {
+      startCookieBar();
     }
   }
-
-  // If cookieBAR should always be show, then STARTUP
-  if (getURLParameter('always')) {
-    startup = true;
-  }
-
-  if (startup === true && shutup === false) {
-    startCookieBar();
-  }
-
 
   /**
    * Load external files (css, language files etc.)
