@@ -254,6 +254,10 @@ function setupCookieBar() {
           tracking.style.display = 'block';
         }
 
+        if (getURLParameter('hideDetailsBtn')) {
+          promptBtn.style.display = 'none';
+        }
+
         if (getURLParameter('scrolling')) {
           scrolling.style.display = 'inline-block';
         }

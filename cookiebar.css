@@ -25,23 +25,26 @@
 
 #cookie-bar {
     background: #45484D;
-    background:    -moz-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
+    background: -moz-linear-gradient(top, rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,30,30,0.95)), color-stop(100%,rgba(0,0,0,0.95)));
-    background: -webkit-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background:      -o-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background:     -ms-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background:         linear-gradient(to bottom,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
+    background: -webkit-linear-gradient(top, rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
+    background: -o-linear-gradient(top, rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
+    background: -ms-linear-gradient(top, rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
+    background: rgba(0,0,0,0.95);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt !important;
+    font-size: 10pt;
     left: 0;
     line-height: 1.5;
     margin: 0;
-    padding: 3px;
+    padding: 10px 3px;
     position: fixed;
-    width: 100%;
+    width: 90%;
     z-index: 9999;
-
+    bottom: 10px !important;
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc45484d', endColorstr='#cc000000',GradientType=0 );
+    margin-left: 5%;
+    border-radius: 10px;
 }
 
 #cookie-bar-prompt {
