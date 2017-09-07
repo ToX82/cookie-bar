@@ -1,5 +1,6 @@
 cookieBAR
 =============
+[![](https://data.jsdelivr.com/v1/package/gh/ToX82/cookie-bar/badge)](https://www.jsdelivr.com/package/gh/ToX82/cookie-bar)
 
 cookieBAR is a free & easy solution to the EU cookie law.
 
