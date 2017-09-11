@@ -1,0 +1,27 @@
+{
+  "name": "cookie-bar",
+  "title": "cookieBAR",
+  "version": "1.5.27",
+  "description": "cookieBAR is a free & easy solution to the EU cookie law.",
+  "main": "cookiebar-latest.min.js",
+  "homepage": "https://cookie-bar.eu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ToX82/cookie-bar.git"
+  },
+  "author": "Emanuele 'ToX' Toscano",
+  "contributors": "https://github.com/ToX82/cookie-bar/graphs/contributors",
+  "keywords": [
+    "cookie",
+    "cookielaw",
+    "cookiebar",
+    "cookie consent",
+    "multilanguage",
+    "vanilla js"
+  ],
+  "bugs": {
+    "url": "https://github.com/ToX82/cookie-bar/issues"
+  },
+  "license": "GNU GPL v2.0",
+  "dependencies": {}
+}
