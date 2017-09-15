@@ -1,6 +1,6 @@
 cookieBAR
 =============
-[![](https://data.jsdelivr.com/v1/package/gh/ToX82/cookie-bar/badge)](https://www.jsdelivr.com/package/gh/ToX82/cookie-bar)
+[![](https://data.jsdelivr.com/v1/package/npm/cookie-bar/badge)](https://www.jsdelivr.com/package/npm/cookie-bar)
 
 cookieBAR is a free & easy solution to the EU cookie law.
 
@@ -14,7 +14,7 @@ Cookie bar makes it simple and clear to visitors that cookies are in use and tel
 
 Just place this somewhere in your website and forget it:
 
-    https://cdn.jsdelivr.net/gh/ToX82/cookie-bar/cookiebar-latest.min.js
+    https://cdn.jsdelivr.net/npm/cookie-bar/cookiebar-latest.min.js
 
 ##### DEMO AND CONFIGURATION
 
