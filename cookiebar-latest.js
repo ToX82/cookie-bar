@@ -22,6 +22,7 @@ var CookieLanguages = [
   'pl',
   'pt',
   'ro',
+  'ru',
   'se',
   'sk',
   'sl'
