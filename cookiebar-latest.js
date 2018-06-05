@@ -133,6 +133,9 @@ function setupCookieBar() {
         if (cookieLawStates.indexOf(country) > -1) {
           startup = true;
         } else {
+          if (getURLParameter('autoOptIn')) {
+	    setCookie('cookiebar', 'CookieAllowed');
+	  }
           shutup = true;
         }
       }
