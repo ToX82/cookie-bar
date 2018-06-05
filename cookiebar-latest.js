@@ -133,10 +133,13 @@ function setupCookieBar() {
         if (cookieLawStates.indexOf(country) > -1) {
           startup = true;
         } else {
+          shutup = true;
           if (getURLParameter('autoOptIn')) {
 	    setCookie('cookiebar', 'CookieAllowed');
 	  }
-          shutup = true;
+	  if (getURLParameter('refreshPage')) {
+            window.location.reload();
+          }
         }
       }
 
@@ -171,6 +174,9 @@ function setupCookieBar() {
     checkEurope.send();
   }
 
+  function hideCookieBar() {
+    
+  }
 
   /**
    * Initialize cookieBAR according to the startup / shutup values.
