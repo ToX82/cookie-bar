@@ -117,7 +117,7 @@ function setupCookieBar() {
   else {
     // If the user is in EU, then STARTUP
     var checkEurope = new XMLHttpRequest();
-    checkEurope.open('GET', '//freegeoip.net/json/', true);
+    checkEurope.open('GET', '//api.ipdata.co', true);
     checkEurope.onreadystatechange = function() {
       // Don't process anything else besides finished requests.
       if (checkEurope.readyState !== 4) {
@@ -134,6 +134,12 @@ function setupCookieBar() {
           startup = true;
         } else {
           shutup = true;
+          if (getURLParameter('autoOptIn')) {
+	    setCookie('cookiebar', 'CookieAllowed');
+	  }
+	  if (getURLParameter('refreshPage')) {
+            window.location.reload();
+          }
         }
       }
 
@@ -168,6 +174,9 @@ function setupCookieBar() {
     checkEurope.send();
   }
 
+  function hideCookieBar() {
+    
+  }
 
   /**
    * Initialize cookieBAR according to the startup / shutup values.
