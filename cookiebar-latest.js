@@ -182,6 +182,8 @@ function setupCookieBar() {
       } else {
         shutup = true;
       }
+    } else {
+      startup = false;
     }
 
     // If cookieBAR should always be show, then STARTUP
