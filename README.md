@@ -14,7 +14,7 @@ Cookie bar makes it simple and clear to visitors that cookies are in use and tel
 
 Just place this somewhere in your website and forget it:
 
-    https://cdn.jsdelivr.net/gh/ToX82/cookie-bar@latest/cookiebar-latest.js
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/cookie-bar/latest/cookiebar-latest.min.js"></script>
 
 ##### DEMO AND CONFIGURATION
 
