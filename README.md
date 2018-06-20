@@ -14,7 +14,7 @@ Cookie bar makes it simple and clear to visitors that cookies are in use and tel
 
 Get to this page, configure the cookiebar to your needs and place the generated code somewhere in your web pages:
 
-    [https://cookie-bar.eu/#configuration](https://cookie-bar.eu/#configuration)
+[https://cookie-bar.eu/#configuration](https://cookie-bar.eu/#configuration/)
 
 ##### How it works?
 
