@@ -12,15 +12,9 @@ Cookie bar makes it simple and clear to visitors that cookies are in use and tel
 
 ##### TL;DR
 
-Just place this somewhere in your website and forget it:
+Get to this page, configure the cookiebar to your needs and place the generated code somewhere in your web pages:
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/cookie-bar/latest/cookiebar-latest.min.js"></script>
-
-##### DEMO AND CONFIGURATION
-
-Everyone wants to see a demo before downloading something, isn't it? You can see a demo on [cookie-bar.eu](http://cookie-bar.eu/). You can even use the configuration wizard to make the bar more compliant to your needs.
-
-
+    [https://cookie-bar.eu/#configuration](https://cookie-bar.eu/#configuration)
 
 ##### How it works?
 
