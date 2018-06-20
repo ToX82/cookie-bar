@@ -155,22 +155,6 @@
     text-decoration: underline;
 }
 
-#cookie-bar-prompt-close {
-    background: url(x.png) no-repeat;
-    display: block;
-    float: right;
-    height: 14px;
-    width: 14px;
-}
-
-#cookie-bar-prompt-logo {
-    background: url(logo.png) no-repeat;
-    display: block;
-    float: left;
-    height: 42px;
-    width: 190px;
-}
-
 #cookie-bar-prompt-close span, #cookie-bar-prompt-logo span {
     display: none;
 }
@@ -206,9 +190,28 @@
 #cookie-bar-privacy-page {
     display: none;
 }
+
+#cookie-bar-prompt-close {
+    background: url('images.png') no-repeat;
+    background-position: -102px -94px;
+    display: block;
+    float: right;
+    height: 14px;
+    width: 14px;
+}
+
+#cookie-bar-prompt-logo {
+    background: url('images.png') no-repeat;
+    background-position: -2px -0px;
+    display: block;
+    float: left;
+    height: 42px;
+    width: 190px;
+}
 #cookie-bar-browsers a {
     display: inline-block;
-    height: 53px;
+    background: url('images.png') no-repeat;
+    text-align: left;
     margin: 0;
     padding: 0;
     position: relative;
@@ -226,24 +229,23 @@
     top: 60px;
     width: 150px;
 }
-#cookie-bar-browsers .chrome {
-    background: url(browsers/chrome.png) no-repeat;
-}
-#cookie-bar-browsers .firefox {
-    background: url(browsers/firefox.png) no-repeat;
-}
-#cookie-bar-browsers .ie {
-    background: url(browsers/ie.png) no-repeat;
-}
-#cookie-bar-browsers .opera {
-    background: url(browsers/opera.png) no-repeat;
-}
-#cookie-bar-browsers .safari {
-    background: url(browsers/safari.png) no-repeat;
-}
-
 #cookie-bar-browsers a:hover span {
     display: block;
+}
+#cookie-bar-browsers .chrome {
+    background-position: -2px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .firefox {
+    background-position: -52px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .ie {
+    background-position: -102px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .opera {
+    background-position: -2px -94px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .safari {
+    background-position: -52px -94px; width: 48px; height: 48px;
 }
 .clear {
     clear: both;

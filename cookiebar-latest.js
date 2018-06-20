@@ -73,9 +73,6 @@ function setupCookieBar() {
   var promptClose;
   var promptContent;
   var promptNoConsent;
-  var cookiesListDiv;
-  var detailsLinkText;
-  var detailsLinkUrl;
   var startup = false;
   var shutup = false;
 
@@ -212,7 +209,7 @@ function setupCookieBar() {
     var minified = (scriptPath.indexOf('.min') > -1) ? '.min' : '';
     var stylesheet = document.createElement('link');
     stylesheet.setAttribute('rel', 'stylesheet');
-    stylesheet.setAttribute('href', path + 'cookiebar' + theme + minified + '.css');
+    stylesheet.setAttribute('href', path + 'themes/cookiebar' + theme + minified + '.css');
     document.head.appendChild(stylesheet);
 
     // Load the correct language messages file and set some variables
@@ -320,23 +317,6 @@ function setupCookieBar() {
       userLang = 'en';
     }
     return userLang;
-  }
-
-  /**
-   * Get a list of all cookies
-   * @param {HTMLElement} cookiesListDiv
-   * @return {void}
-   */
-  function listCookies(cookiesListDiv) {
-    var cookies = [];
-    var i, x, y, ARRcookies = document.cookie.split(';');
-    for (i = 0; i < ARRcookies.length; i += 1) {
-      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
-      y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
-      x = x.replace(/^\s+|\s+$/g, '');
-      cookies.push(x);
-    }
-    cookiesListDiv.innerHTML = cookies.join(', ');
   }
 
   /**

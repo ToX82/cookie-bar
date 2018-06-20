@@ -23,10 +23,15 @@
 
 
 
-#cookie-bar {
-    background: #45484D;
+#cookie-bar-prompt-content, #cookie-bar {
+    color: #000;
+    font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
+}
+
+#cookie-bar {
+    background: #f5f5f5;
+    border-top: 4px solid #333;
     left: 0;
     line-height: 1.5;
     margin: 0;
@@ -38,9 +43,7 @@
 
 #cookie-bar-prompt {
     background: #000;
-    background: rgba(0,0,0,0.4);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
+    background: rgba(0,0,0,0.7);
     height: 100%;
     left: 0;
     line-height: 1.5;
@@ -61,13 +64,9 @@
     float: left;
     margin: 4px 0 0 20px;
     padding: 0;
-    color: #FFF;
-    font-family: sans-serif;
 }
 
 #cookie-bar-prompt p {
-  font-family: Arial, Helvetica, sans-serif;
-  color: #FFF;
 }
 
 #cookie-bar-button {
@@ -109,11 +108,6 @@
     border: none;
     height: 1px;
     margin: 0.7em 0 1em;
-    opacity: 0.2;
-}
-#cookie-bar-prompt-content, #cookie-bar {
-    color: #FFF;
-    font-weight: 300;
 }
 
 #cookie-bar-prompt-content::-webkit-scrollbar-track {
@@ -131,29 +125,13 @@
 }
 
 #cookie-bar-prompt-content a, #cookie-bar a, #cookie-bar-prompt-content span {
-    color: #31A8F0;
+    color: #9B1A1A;
     text-decoration: none;
 }
 
 #cookie-bar-prompt-content a:hover, #cookie-bar a:hover {
-    color: #31A8F0;
+    color: #9B1A1A;
     text-decoration: underline;
-}
-
-#cookie-bar-prompt-close {
-    background: url(x.png) no-repeat;
-    display: block;
-    float: right;
-    height: 14px;
-    width: 14px;
-}
-
-#cookie-bar-prompt-logo {
-    background: url(logo.png) no-repeat;
-    display: block;
-    float: left;
-    height: 42px;
-    width: 190px;
 }
 
 #cookie-bar-prompt-close span, #cookie-bar-prompt-logo span {
@@ -165,9 +143,8 @@
 }
 
 #cookie-bar-prompt-content {
-    background: #45484D;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    color: #FFF;
+    background: #aaa;
+    border: 2px solid #333;
     margin: 0 auto;
     max-width: 98%;
     overflow: auto;
@@ -189,44 +166,63 @@
 #cookie-bar-privacy-page {
     display: none;
 }
+
+#cookie-bar-prompt-close {
+    background: url('images.png') no-repeat;
+    background-position: -102px -94px;
+    display: block;
+    float: right;
+    height: 14px;
+    width: 14px;
+}
+
+#cookie-bar-prompt-logo {
+    background: url('images.png') no-repeat;
+    background-position: -2px -0px;
+    display: block;
+    float: left;
+    height: 42px;
+    width: 190px;
+}
 #cookie-bar-browsers a {
     display: inline-block;
+    background: url('images.png') no-repeat;
+    text-align: left;
     height: 53px;
     margin: 0;
     padding: 0;
     position: relative;
 }
 #cookie-bar-browsers a span {
-    background: #FFF;
+    background: #555;
     border-radius: 2px;
     color: #000 !important;
     display: none;
     left: -10px;
-    opacity: 0.8;
+    opacity: 1;
     padding: 3px 10px;
     position: absolute;
     text-align: center;
     top: 60px;
     width: 150px;
 }
-#cookie-bar-browsers .chrome {
-    background: url(browsers/chrome.png) no-repeat;
-}
-#cookie-bar-browsers .firefox {
-    background: url(browsers/firefox.png) no-repeat;
-}
-#cookie-bar-browsers .ie {
-    background: url(browsers/ie.png) no-repeat;
-}
-#cookie-bar-browsers .opera {
-    background: url(browsers/opera.png) no-repeat;
-}
-#cookie-bar-browsers .safari {
-    background: url(browsers/safari.png) no-repeat;
-}
-
 #cookie-bar-browsers a:hover span {
     display: block;
+}
+#cookie-bar-browsers .chrome {
+    background-position: -2px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .firefox {
+    background-position: -52px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .ie {
+    background-position: -102px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .opera {
+    background-position: -2px -94px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .safari {
+    background-position: -52px -94px; width: 48px; height: 48px;
 }
 .clear {
     clear: both;
