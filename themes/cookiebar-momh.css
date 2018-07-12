@@ -1,0 +1,257 @@
+/*
+* cookiear-momh
+* theme for @ToX82 jQuery-free cookieBAR script
+* (https://github.com/ToX82/cookie-bar)
+* based on the altblack theme
+* @author Brice Boucard | bricebou
+* @license MIT License | http://bricebou.mit-license.org/
+* @link http://momh.fr/
+* @date:   2018-07-12
+*/
+
+#cookie-bar {
+    font-size: 14px;
+}
+#cookie-bar-prompt-content {
+    font-size: 14px;
+    max-height: 85vh;
+}
+#cookie-bar-browsers a {
+    width: 60px;
+}
+@media only screen and (max-device-width: 800px) {
+    #cookie-bar {
+        font-size: 13px;
+    }
+    #cookie-bar-prompt-content {
+        font-size: 13px;
+        max-height: 80vh;
+    }
+    #cookie-bar-browsers a {
+        width: 50px;
+    }
+}
+
+
+
+#cookie-bar {
+    background: rgb(45,63,74);
+    /* gradient thanks to https://cssgradient.io/ */
+    background: -moz-radial-gradient(circle, rgba(45,63,74,1) 33%, rgba(0,0,0,0.9) 100%);
+    background: -webkit-radial-gradient(circle, rgba(45,63,74,1) 33%, rgba(0,0,0,0.9) 100%);
+    background: radial-gradient(circle, rgba(45,63,74,1) 33%, rgba(0,0,0,0.9) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2d3f4a",endColorstr="#000000",GradientType=1); 
+    font-family: 'Route 159', sans-serif;
+    left: 0;
+    line-height: 1.5;
+    margin: 0;
+    padding: 4px;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+}
+
+#cookie-bar-prompt {
+    background: rgb(45,63,74);
+    background: rgba(45,63,74,0.5);
+    font-family: 'Route 159', sans-serif;
+    height: 100%;
+    left: 0;
+    line-height: 1.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9998;
+}
+
+#cookie-bar *,
+#cookie-bar-prompt * {
+    line-height: 1.5;
+}
+
+#cookie-bar p {
+    float: left;
+    margin: 4px 0 0 20px;
+    padding: 0;
+    color: #FFF;
+    font-family: 'Route 159', sans-serif;
+}
+
+#cookie-bar-prompt p {
+  font-family: 'Route 159', sans-serif;
+  color: #FFF;
+}
+
+#cookie-bar-button,
+#cookie-bar-button-no
+ {
+    background-color: transparent;
+    color: #FFF !important;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    font-weight: normal;
+    line-height: 1;
+    margin-right: 20px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 5px 10px 6px;
+    position: relative;
+    text-decoration: none;
+}
+#cookie-bar-button {
+    border: solid 1px #25BEA0;
+}
+#cookie-bar-button:hover {
+    text-decoration: none !important;
+    background-color: #25BEA0;
+}
+#cookie-bar-button-no {
+    border: solid 1px #A57341;
+}
+#cookie-bar-button-no:hover {
+    text-decoration: none !important;
+    background-color: #A57341;
+}
+
+#cookie-bar-prompt a {
+    cursor: pointer;
+}
+#cookie-bar-prompt hr {
+    background: #FFF;
+    border: none;
+    height: 1px;
+    margin: 0.7em 0 1em;
+    opacity: 0.2;
+}
+#cookie-bar-prompt-content, #cookie-bar {
+    color: #FFF;
+    font-weight: 300;
+}
+
+#cookie-bar-prompt-content::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #222;
+    background-color: rgba(255,255,255,0.05);
+}
+
+#cookie-bar-prompt-content::-webkit-scrollbar {
+    width: 15px;
+}
+
+#cookie-bar-prompt-content::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background-color: #EEE;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+}
+
+#cookie-bar-prompt-content a, #cookie-bar a {
+    color: #FABC09;
+    text-decoration: none;
+}
+
+#cookie-bar-prompt-content a:hover,#cookie-bar a:hover {
+    color: #25BEA0;
+    text-decoration: underline;
+}
+
+#cookie-bar-prompt-content span {
+    color: #A57341;
+}
+
+#cookie-bar-prompt-close span, #cookie-bar-prompt-logo span {
+    display: none;
+}
+
+#cookie-bar-prompt-button {
+    cursor: pointer;
+}
+
+#cookie-bar-prompt-content {
+    background: #111;
+    border-radius: 7px;
+    box-shadow: 1px 2px 8px rgba(0,0,0,0.5);
+    color: #FFF;
+    margin: 0 auto;
+    max-width: 98%;
+    opacity: 0.97;
+    overflow: auto;
+    padding: 25px;
+    position: relative;
+    top: 5%;
+    width: 600px;
+    z-index: 9998;
+}
+#cookie-bar-thirdparty {
+    display: none;
+}
+#cookie-bar-tracking {
+    display: none;
+}
+#cookie-bar-scrolling {
+    display: none;
+}
+#cookie-bar-privacy-page {
+    display: none;
+}
+
+#cookie-bar-prompt-close {
+    background: url('images.png') no-repeat;
+    background-position: -102px -94px;
+    display: block;
+    float: right;
+    height: 14px;
+    width: 14px;
+}
+
+#cookie-bar-prompt-logo {
+    background: url('images.png') no-repeat;
+    background-position: -2px -0px;
+    display: block;
+    float: left;
+    height: 42px;
+    width: 190px;
+}
+#cookie-bar-browsers a {
+    display: inline-block;
+    background: url('images.png') no-repeat;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+#cookie-bar-browsers a span {
+    background: #FFF;
+    border-radius: 2px;
+    color: #000 !important;
+    display: none;
+    left: -10px;
+    opacity: 0.8;
+    padding: 3px 10px;
+    position: absolute;
+    text-align: center;
+    top: 60px;
+    width: 150px;
+}
+#cookie-bar-browsers a:hover span {
+    display: block;
+}
+#cookie-bar-browsers .chrome {
+    background-position: -2px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .firefox {
+    background-position: -52px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .ie {
+    background-position: -102px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .opera {
+    background-position: -2px -94px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .safari {
+    background-position: -52px -94px; width: 48px; height: 48px;
+}
+.clear {
+    clear: both;
+}
