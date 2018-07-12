@@ -114,7 +114,7 @@ function setupCookieBar() {
   else {
     // If the user is in EU, then STARTUP
     var checkEurope = new XMLHttpRequest();
-    checkEurope.open('GET', 'https://api.ipdata.co', true);
+    checkEurope.open('GET', 'https://freegeoip.app/json/', true);
     checkEurope.onreadystatechange = function() {
       // Don't process anything else besides finished requests.
       if (checkEurope.readyState !== 4) {
