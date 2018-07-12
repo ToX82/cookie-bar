@@ -130,7 +130,12 @@ function setupCookieBar() {
         if (cookieLawStates.indexOf(country) > -1) {
           startup = true;
         } else {
+          // If the user is outside of EEA, allow cookies and refresh if needed
           shutup = true;
+          setCookie('cookiebar', 'CookieAllowed');
+          if (getURLParameter('refreshPage')) {
+            window.location.reload();
+          }
         }
       }
 
