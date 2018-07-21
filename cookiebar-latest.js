@@ -13,6 +13,7 @@ var CookieLanguages = [
   'cs',
   'da',
   'de',
+  'el',
   'en',
   'es',
   'fr',
