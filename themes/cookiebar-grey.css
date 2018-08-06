@@ -170,7 +170,8 @@
 #cookie-bar-scrolling {
     display: none;
 }
-#cookie-bar-privacy-page {
+#cookie-bar-privacy-page,
+#cookie-bar-main-privacy-link {
     display: none;
 }
 #cookie-bar-prompt-close {

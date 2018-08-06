@@ -243,6 +243,7 @@ function setupCookieBar() {
         scrolling = document.getElementById('cookie-bar-scrolling');
         privacyPage = document.getElementById('cookie-bar-privacy-page');
         privacyLink = document.getElementById('cookie-bar-privacy-link');
+        mainBarPrivacyLink = document.getElementById('cookie-bar-main-privacy-link');
 
         if (!getURLParameter('showNoConsent')) {
           promptNoConsent.style.display = 'none';
@@ -279,9 +280,13 @@ function setupCookieBar() {
         }
 
         if (getURLParameter('privacyPage')) {
-          var url = decodeURIComponent(getURLParameter('privacyPage'));
-          privacyLink.href = url;
+          privacyLink.href = getPrivacyPageUrl();
           privacyPage.style.display = 'inline-block';
+        }
+
+        if (getURLParameter('showPolicyLink') && getURLParameter('privacyPage')) {
+          mainBarPrivacyLink.href = getPrivacyPageUrl();
+          mainBarPrivacyLink.style.display = 'inline-block';
         }
 
         setEventListeners();
@@ -290,6 +295,14 @@ function setupCookieBar() {
       }
     };
     request.send();
+  }
+
+  /**
+   * Get the privacy page's url (if set as an option)
+   * @return {String} privacy page url
+   */
+  function getPrivacyPageUrl() {
+    return decodeURIComponent(getURLParameter('privacyPage'));
   }
 
   /**
