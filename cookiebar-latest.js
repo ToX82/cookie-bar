@@ -16,10 +16,12 @@ var CookieLanguages = [
   'el',
   'en',
   'es',
+  'fi',
   'fr',
   'hu',
   'it',
   'nl',
+  'no',
   'pl',
   'pt',
   'ro',
@@ -72,7 +74,6 @@ function setupCookieBar() {
   var prompt;
   var promptBtn;
   var promptClose;
-  var promptContent;
   var promptNoConsent;
   var startup = false;
   var shutup = false;
