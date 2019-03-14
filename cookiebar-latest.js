@@ -9,6 +9,7 @@
  * Available languages array
  */
 var CookieLanguages = [
+  'bg',
   'ca',
   'cs',
   'da',
