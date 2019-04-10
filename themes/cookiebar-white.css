@@ -65,6 +65,9 @@
     margin: 4px 0 0 20px;
     padding: 0;
 }
+#cookie-bar p a {
+    padding: 0 8px;
+}
 
 #cookie-bar-prompt p {
 }

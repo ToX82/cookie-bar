@@ -71,6 +71,9 @@
     color: #FFF;
     font-family: 'Open Sans', sans-serif;
 }
+#cookie-bar p a {
+    padding: 0 5px;
+}
 
 #cookie-bar-prompt p {
   font-family: 'Open Sans', sans-serif;

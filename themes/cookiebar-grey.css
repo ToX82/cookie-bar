@@ -64,6 +64,9 @@
     color: #FFF;
     font-family: sans-serif;
 }
+#cookie-bar p a {
+    padding: 0 8px;
+}
 
 #cookie-bar-prompt p {
   font-family: Arial, Helvetica, sans-serif;
