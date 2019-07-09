@@ -10,6 +10,7 @@
  */
 var CookieLanguages = [
   'bg',
+  'br',
   'ca',
   'cs',
   'da',
@@ -25,7 +26,6 @@ var CookieLanguages = [
   'no',
   'pl',
   'pt',
-  'pt-BR',
   'ro',
   'ru',
   'se',
@@ -37,6 +37,7 @@ var cookieLawStates = [
   'AT',
   'BE',
   'BG',
+  'BR',
   'CY',
   'CZ',
   'DE',
@@ -58,7 +59,6 @@ var cookieLawStates = [
   'NL',
   'PL',
   'PT',
-  'PT-BR',
   'RO',
   'SE',
   'SI',
