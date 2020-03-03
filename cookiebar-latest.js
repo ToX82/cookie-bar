@@ -57,6 +57,7 @@ var cookieLawStates = [
   'LV',
   'MT',
   'NL',
+  'NO',
   'PL',
   'PT',
   'RO',
