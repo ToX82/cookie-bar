@@ -178,7 +178,8 @@
     padding: 25px;
     position: relative;
     top: 5%;
-    width: 600px;
+    width: auto;
+    max-width: 600px;
     z-index: 9998;
 }
 #cookie-bar-thirdparty {
