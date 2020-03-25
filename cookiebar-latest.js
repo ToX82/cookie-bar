@@ -20,6 +20,7 @@ var CookieLanguages = [
   'es',
   'fi',
   'fr',
+  'hr',
   'hu',
   'it',
   'nl',
