@@ -492,7 +492,11 @@ function setupCookieBar() {
 
     buttonNo.addEventListener('click', function() {
       var txt = promptNoConsent.textContent.trim();
-      var confirm = window.confirm(txt);
+      var confirm = true;
+      if (!getURLParameter('noConfirm')) {
+        confirm = window.confirm(txt);
+      }
+
       if (confirm === true) {
         removeCookies();
         setCookie('cookiebar', 'CookieDisallowed');
