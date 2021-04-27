@@ -1,6 +1,6 @@
 cookieBAR
 =============
-[![](https://data.jsdelivr.com/v1/package/npm/cookie-bar/badge)](https://www.jsdelivr.com/package/npm/cookie-bar)
+[![](https://data.jsdelivr.com/v1/package/npm/cookie-bar/badge)](https://www.jsdelivr.com/package/npm/cookie-bar) [![Rate on Openbase](https://badges.openbase.com/js/rating/cookie-bar.svg)](https://openbase.com/js/cookie-bar?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 
 cookieBAR is a free & easy solution to the EU cookie law.
 
