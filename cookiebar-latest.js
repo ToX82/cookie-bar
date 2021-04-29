@@ -3,53 +3,69 @@
   Plugin URL: http://cookie-bar.eu/
   @author: Emanuele "ToX" Toscano
   @description: Cookie Bar is a free & simple solution to the EU cookie law.
-  @version: 1.5.9
 */
 
 /*
  * Available languages array
  */
 var CookieLanguages = [
+  'bg',
+  'br',
   'ca',
+  'cs',
+  'da',
   'de',
+  'el',
   'en',
   'es',
+  'fi',
   'fr',
+  'hr',
   'hu',
   'it',
   'nl',
+  'no',
+  'pl',
   'pt',
-  'ro'
+  'ro',
+  'ru',
+  'se',
+  'sk',
+  'sl',
+  'tr'
 ];
 
 var cookieLawStates = [
+  'AT',
   'BE',
   'BG',
+  'BR',
+  'CY',
   'CZ',
-  'DK',
   'DE',
+  'DK',
   'EE',
-  'IE',
   'EL',
   'ES',
+  'FI',
   'FR',
+  'GB',
+  'HR',
+  'HU',
+  'IE',
   'IT',
-  'CY',
-  'LV',
   'LT',
   'LU',
-  'HU',
+  'LV',
   'MT',
   'NL',
-  'AT',
+  'NO',
   'PL',
   'PT',
   'RO',
-  'SI',
-  'SK',
-  'FI',
   'SE',
-  'GB'
+  'SI',
+  'SK'
 ];
 
 
@@ -64,22 +80,27 @@ function setupCookieBar() {
   var prompt;
   var promptBtn;
   var promptClose;
-  var promptContent;
   var promptNoConsent;
-  var cookiesListDiv;
-  var detailsLinkText;
-  var detailsLinkUrl;
   var startup = false;
   var shutup = false;
+
+  // Get the users current cookie selection
+  var currentCookieSelection = getCookie();
 
   /**
    * If cookies are disallowed, delete all the cookies at every refresh
    * @param null
    * @return null
    */
-  if (getCookie() == 'CookieDisallowed') {
+  if (currentCookieSelection == 'CookieDisallowed') {
     removeCookies();
     setCookie('cookiebar', 'CookieDisallowed');
+  }
+
+  // Stop further execution,
+  // if the user already allowed / disallowed cookie usage.
+  if (currentCookieSelection !== undefined) {
+    return;
   }
 
   /**
@@ -91,52 +112,99 @@ function setupCookieBar() {
    * @return null
    */
 
-  // If the user is in EU, then STARTUP
-  var checkEurope = new XMLHttpRequest();
-  checkEurope.open('GET', '//freegeoip.io/json/', true);
-  checkEurope.onreadystatechange = function() {
-    if (checkEurope.readyState === 4 && checkEurope.status === 200) {
+  // Init cookieBAR without geoip localization, if it was explicitly disabled.
+  if (getURLParameter('noGeoIp')) {
+    startup = true;
+    initCookieBar();
+  }
+
+  // Otherwise execute geoip localization and init cookieBAR afterwards.
+  else {
+    // If the user is in EU, then STARTUP
+    var checkEurope = new XMLHttpRequest();
+    checkEurope.open('GET', 'https://freegeoip.app/json/', true);
+    checkEurope.onreadystatechange = function() {
+      // Don't process anything else besides finished requests.
+      if (checkEurope.readyState !== 4) {
+        return;
+      }
+
+      // Immediately clear timeout handler in order to avoid multiple executions.
       clearTimeout(xmlHttpTimeout);
-      var country = JSON.parse(checkEurope.responseText).country_code;
-      if (cookieLawStates.indexOf(country) > -1) {
+
+      // Process response on case of a successful request.
+      if (checkEurope.status === 200) {
+        var country = JSON.parse(checkEurope.responseText).country_code;
+        if (cookieLawStates.indexOf(country) > -1) {
+          startup = true;
+        } else {
+          // If the user is outside of EEA, allow cookies and refresh if needed
+          shutup = true;
+          setCookie('cookiebar', 'CookieAllowed');
+          if (getURLParameter('refreshPage')) {
+            window.location.reload();
+          }
+        }
+      }
+
+      // Enforce startup, if the webservice returned an error.
+      else {
+        startup = true;
+      }
+
+      // Init cookieBAR after geoip localization was finished.
+      initCookieBar();
+    };
+
+    /*
+     * Using an external service for geoip localization could be a long task
+     * If it takes more than 1.5 second, start normally
+     */
+    var xmlHttpTimeout = setTimeout(function () {
+      console.log('cookieBAR - Timeout for ip geolocation');
+
+      // Make sure, that checkEurope.onreadystatechange() is not called anymore
+      // in order to avoid possible multiple executions of initCookieBar().
+      checkEurope.onreadystatechange = function() {};
+
+      // Abort geoip localization.
+      checkEurope.abort();
+
+      // Init cookieBAR after geoip localization was aborted.
+      startup = true;
+      initCookieBar();
+    }, 1500);
+
+    checkEurope.send();
+  }
+
+
+  /**
+   * Initialize cookieBAR according to the startup / shutup values.
+   * @return null
+   */
+  function initCookieBar() {
+    // If at least a cookie or localstorage is set, then STARTUP
+    if (document.cookie.length > 0 || window.localStorage.length > 0) {
+      var accepted = getCookie();
+      if (accepted === undefined) {
         startup = true;
       } else {
         shutup = true;
       }
-    }
-  };
-
-  /*
-  * Using an external service for geoip localization could be a long task
-  * If it takes more than 1.5 second, start normally
-  */
-  var xmlHttpTimeout = setTimeout(ajaxTimeout, 1500);
-  function ajaxTimeout() {
-    console.log('cookieBAR - Timeout for ip geolocation');
-    checkEurope.abort();
-    startup = true;
-  }
-  checkEurope.send();
-
-  // If at least a cookie or localstorage is set, then STARTUP
-  if (document.cookie.length > 0 || window.localStorage.length > 0) {
-    var accepted = getCookie();
-    if (accepted === undefined) {
-      startup = true;
     } else {
-      shutup = true;
+      startup = false;
+    }
+
+    // If cookieBAR should always be show, then STARTUP
+    if (getURLParameter('always')) {
+      startup = true;
+    }
+
+    if (startup === true && shutup === false) {
+      startCookieBar();
     }
   }
-
-  // If cookieBAR should always be show, then STARTUP
-  if (getURLParameter('always')) {
-    startup = true;
-  }
-
-  if (startup === true && shutup === false) {
-    startCookieBar();
-  }
-
 
   /**
    * Load external files (css, language files etc.)
@@ -154,12 +222,12 @@ function setupCookieBar() {
     var minified = (scriptPath.indexOf('.min') > -1) ? '.min' : '';
     var stylesheet = document.createElement('link');
     stylesheet.setAttribute('rel', 'stylesheet');
-    stylesheet.setAttribute('href', path + 'cookiebar' + theme + minified + '.css');
+    stylesheet.setAttribute('href', path + 'themes/cookiebar' + theme + minified + '.css');
     document.head.appendChild(stylesheet);
 
     // Load the correct language messages file and set some variables
     var request = new XMLHttpRequest();
-    request.open('GET', path + '/lang/' + userLang + '.html', true);
+    request.open('GET', path + 'lang/' + userLang + '.html', true);
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
         var element = document.createElement('div');
@@ -182,6 +250,7 @@ function setupCookieBar() {
         scrolling = document.getElementById('cookie-bar-scrolling');
         privacyPage = document.getElementById('cookie-bar-privacy-page');
         privacyLink = document.getElementById('cookie-bar-privacy-link');
+        mainBarPrivacyLink = document.getElementById('cookie-bar-main-privacy-link');
 
         if (!getURLParameter('showNoConsent')) {
           promptNoConsent.style.display = 'none';
@@ -201,6 +270,10 @@ function setupCookieBar() {
           tracking.style.display = 'block';
         }
 
+        if (getURLParameter('hideDetailsBtn')) {
+          promptBtn.style.display = 'none';
+        }
+
         if (getURLParameter('scrolling')) {
           scrolling.style.display = 'inline-block';
         }
@@ -214,9 +287,13 @@ function setupCookieBar() {
         }
 
         if (getURLParameter('privacyPage')) {
-          var url = decodeURIComponent(getURLParameter('privacyPage'));
-          privacyLink.href = url;
+          privacyLink.href = getPrivacyPageUrl();
           privacyPage.style.display = 'inline-block';
+        }
+
+        if (getURLParameter('showPolicyLink') && getURLParameter('privacyPage')) {
+          mainBarPrivacyLink.href = getPrivacyPageUrl();
+          mainBarPrivacyLink.style.display = 'inline-block';
         }
 
         setEventListeners();
@@ -225,6 +302,14 @@ function setupCookieBar() {
       }
     };
     request.send();
+  }
+
+  /**
+   * Get the privacy page's url (if set as an option)
+   * @return {String} privacy page url
+   */
+  function getPrivacyPageUrl() {
+    return decodeURIComponent(getURLParameter('privacyPage'));
   }
 
   /**
@@ -258,23 +343,6 @@ function setupCookieBar() {
       userLang = 'en';
     }
     return userLang;
-  }
-
-  /**
-   * Get a list of all cookies
-   * @param {HTMLElement} cookiesListDiv
-   * @return {void}
-   */
-  function listCookies(cookiesListDiv) {
-    var cookies = [];
-    var i, x, y, ARRcookies = document.cookie.split(';');
-    for (i = 0; i < ARRcookies.length; i += 1) {
-      x = ARRcookies[i].substr(0, ARRcookies[i].indexOf('='));
-      y = ARRcookies[i].substr(ARRcookies[i].indexOf('=') + 1);
-      x = x.replace(/^\s+|\s+$/g, '');
-      cookies.push(x);
-    }
-    cookiesListDiv.innerHTML = cookies.join(', ');
   }
 
   /**
@@ -418,11 +486,18 @@ function setupCookieBar() {
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
+      if (getURLParameter('refreshPage')) {
+          window.location.reload();
+      }
     });
 
     buttonNo.addEventListener('click', function() {
       var txt = promptNoConsent.textContent.trim();
-      var confirm = window.confirm(txt);
+      var confirm = true;
+      if (!getURLParameter('noConfirm')) {
+        confirm = window.confirm(txt);
+      }
+
       if (confirm === true) {
         removeCookies();
         setCookie('cookiebar', 'CookieDisallowed');
@@ -451,6 +526,9 @@ function setupCookieBar() {
             fadeOut(prompt, 250);
             fadeOut(cookieBar, 250);
             scrolled = true;
+            if (getURLParameter('refreshPage')) {
+                window.location.reload();
+            }
           }
         }
       });

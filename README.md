@@ -1,5 +1,6 @@
 cookieBAR
 =============
+[![](https://data.jsdelivr.com/v1/package/npm/cookie-bar/badge)](https://www.jsdelivr.com/package/npm/cookie-bar) [![Rate on Openbase](https://badges.openbase.com/js/rating/cookie-bar.svg)](https://openbase.com/js/cookie-bar?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 
 cookieBAR is a free & easy solution to the EU cookie law.
 
@@ -11,15 +12,9 @@ Cookie bar makes it simple and clear to visitors that cookies are in use and tel
 
 ##### TL;DR
 
-Just place this somewhere in your website and forget it:
+Get to this page, configure the cookiebar to your needs and place the generated code somewhere in your web pages:
 
-    http://cdn.jsdelivr.net/cookie-bar/latest/cookiebar-latest.js
-
-##### DEMO AND CONFIGURATION
-
-Everyone wants to see a demo before downloading something, isn't it? You can see a demo on [cookie-bar.eu](http://cookie-bar.eu/). You can even use the configuration wizard to make the bar more compliant to your needs.
-
-
+[https://cookie-bar.eu/#configuration](https://cookie-bar.eu/#configuration/)
 
 ##### How it works?
 

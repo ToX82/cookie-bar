@@ -1,8 +1,19 @@
+/*
+* cookiear-momh
+* theme for @ToX82 jQuery-free cookieBAR script
+* (https://github.com/ToX82/cookie-bar)
+* based on the altblack theme
+* @author Brice Boucard | bricebou
+* @license MIT License | http://bricebou.mit-license.org/
+* @link http://momh.fr/
+* @date:   2018-07-12
+*/
+
 #cookie-bar {
-    font-size: 13px;
+    font-size: 14px;
 }
 #cookie-bar-prompt-content {
-    font-size: 13px;
+    font-size: 14px;
     max-height: 85vh;
 }
 #cookie-bar-browsers a {
@@ -10,10 +21,10 @@
 }
 @media only screen and (max-device-width: 800px) {
     #cookie-bar {
-        font-size: 12px;
+        font-size: 13px;
     }
     #cookie-bar-prompt-content {
-        font-size: 11px;
+        font-size: 13px;
         max-height: 80vh;
     }
     #cookie-bar-browsers a {
@@ -24,31 +35,26 @@
 
 
 #cookie-bar {
-    background: #45484D;
-    background:    -moz-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,30,30,0.95)), color-stop(100%,rgba(0,0,0,0.95)));
-    background: -webkit-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background:      -o-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background:     -ms-linear-gradient(top,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    background:         linear-gradient(to bottom,  rgba(30,30,30,0.95) 0, rgba(0,0,0,0.95) 100%);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt !important;
+    background: rgb(45,63,74);
+    /* gradient thanks to https://cssgradient.io/ */
+    background: -moz-radial-gradient(circle, rgba(45,63,74,1) 33%, rgba(0,0,0,0.9) 100%);
+    background: -webkit-radial-gradient(circle, rgba(45,63,74,1) 33%, rgba(0,0,0,0.9) 100%);
+    background: radial-gradient(circle, rgba(45,63,74,1) 33%, rgba(0,0,0,0.9) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2d3f4a",endColorstr="#000000",GradientType=1); 
+    font-family: 'Route 159', sans-serif;
     left: 0;
     line-height: 1.5;
     margin: 0;
-    padding: 3px;
+    padding: 4px;
     position: fixed;
     width: 100%;
     z-index: 9999;
-
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc45484d', endColorstr='#cc000000',GradientType=0 );
 }
 
 #cookie-bar-prompt {
-    background: #000;
-    background: rgba(0,0,0,0.4);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt !important;
+    background: rgb(45,63,74);
+    background: rgba(45,63,74,0.5);
+    font-family: 'Route 159', sans-serif;
     height: 100%;
     left: 0;
     line-height: 1.5;
@@ -64,55 +70,52 @@
 }
 
 #cookie-bar p {
-    font-size: 10pt !important;
     float: left;
     margin: 4px 0 0 20px;
     padding: 0;
     color: #FFF;
-    font-family: sans-serif;
+    font-family: 'Route 159', sans-serif;
+}
+#cookie-bar p a {
+    padding: 0 8px;
 }
 
 #cookie-bar-prompt p {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Route 159', sans-serif;
   color: #FFF;
 }
 
-#cookie-bar-button {
-    background-color: #36BF2D;
-    border-bottom: 1px solid #222;
-    border-radius: 5px;
+#cookie-bar-button,
+#cookie-bar-button-no
+ {
+    background-color: transparent;
     color: #FFF !important;
     cursor: pointer;
     display: inline-block;
     float: right;
-    font-weight: bold;
+    font-weight: normal;
     line-height: 1;
     margin-right: 20px;
-    margin-top: 2px;
+    margin-top: 3px;
+    margin-bottom: 3px;
     padding: 5px 10px 6px;
     position: relative;
     text-decoration: none;
-    text-shadow: 0 -1px 1px #222;
 }
-
+#cookie-bar-button {
+    border: solid 1px #25BEA0;
+}
+#cookie-bar-button:hover {
+    text-decoration: none !important;
+    background-color: #25BEA0;
+}
 #cookie-bar-button-no {
-    background-color: #D02828;
-    border-bottom: 1px solid #222;
-    border-radius: 5px;
-    color: #FFF!important;
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    font-weight: bold;
-    line-height: 1;
-    margin-right: 20px;
-    margin-top: 2px;
-    padding: 5px 10px 6px;
-    position: relative;
-    text-decoration: none;
-    text-shadow: 0 -1px 1px #222;
+    border: solid 1px #A57341;
 }
-
+#cookie-bar-button-no:hover {
+    text-decoration: none !important;
+    background-color: #A57341;
+}
 
 #cookie-bar-prompt a {
     cursor: pointer;
@@ -146,30 +149,18 @@
     border-radius: 10px;
 }
 
-#cookie-bar-prompt-content a, #cookie-bar a, #cookie-bar-prompt-content span {
-    color: #31A8F0;
+#cookie-bar-prompt-content a, #cookie-bar a {
+    color: #FABC09;
     text-decoration: none;
 }
 
-#cookie-bar-prompt-content a:hover, #cookie-bar a:hover {
-    color: #31A8F0;
+#cookie-bar-prompt-content a:hover,#cookie-bar a:hover {
+    color: #25BEA0;
     text-decoration: underline;
 }
 
-#cookie-bar-prompt-close {
-    background: url(x.png) no-repeat;
-    display: block;
-    float: right;
-    height: 14px;
-    width: 14px;
-}
-
-#cookie-bar-prompt-logo {
-    background: url(logo.png) no-repeat;
-    display: block;
-    float: left;
-    height: 42px;
-    width: 190px;
+#cookie-bar-prompt-content span {
+    color: #A57341;
 }
 
 #cookie-bar-prompt-close span, #cookie-bar-prompt-logo span {
@@ -204,12 +195,32 @@
 #cookie-bar-scrolling {
     display: none;
 }
-#cookie-bar-privacy-page {
+#cookie-bar-privacy-page,
+#cookie-bar-main-privacy-link {
     display: none;
+}
+
+#cookie-bar-prompt-close {
+    background: url('images.png') no-repeat;
+    background-position: -102px -94px;
+    display: block;
+    float: right;
+    height: 14px;
+    width: 14px;
+}
+
+#cookie-bar-prompt-logo {
+    background: url('images.png') no-repeat;
+    background-position: -2px -0px;
+    display: block;
+    float: left;
+    height: 42px;
+    width: 190px;
 }
 #cookie-bar-browsers a {
     display: inline-block;
-    height: 53px;
+    background: url('images.png') no-repeat;
+    text-align: left;
     margin: 0;
     padding: 0;
     position: relative;
@@ -227,24 +238,23 @@
     top: 60px;
     width: 150px;
 }
-#cookie-bar-browsers .chrome {
-    background: url(browsers/chrome.png) no-repeat;
-}
-#cookie-bar-browsers .firefox {
-    background: url(browsers/firefox.png) no-repeat;
-}
-#cookie-bar-browsers .ie {
-    background: url(browsers/ie.png) no-repeat;
-}
-#cookie-bar-browsers .opera {
-    background: url(browsers/opera.png) no-repeat;
-}
-#cookie-bar-browsers .safari {
-    background: url(browsers/safari.png) no-repeat;
-}
-
 #cookie-bar-browsers a:hover span {
     display: block;
+}
+#cookie-bar-browsers .chrome {
+    background-position: -2px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .firefox {
+    background-position: -52px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .ie {
+    background-position: -102px -44px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .opera {
+    background-position: -2px -94px; width: 48px; height: 48px;
+}
+#cookie-bar-browsers .safari {
+    background-position: -52px -94px; width: 48px; height: 48px;
 }
 .clear {
     clear: both;
