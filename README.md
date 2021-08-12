@@ -24,4 +24,4 @@ Once user clicks `Allow Cookies` cookieBAR will set a cookie for that domain wit
 
 If a user decides to click `Disallow Cookies`, cookieBAR will simply remove all cookies and localStorage data (and will show up again the first time a cookie is detected).
 
-Having a `cookiebar` cookie makes it simple to developers to check the user decision before activating external scripts (such as Google Analytics, or anything else). See [http://cookie-bar.eu](http://cookie-bar.eu/) for more informations.
+Having a `cookiebar` cookie makes it simple to developers to check the user decision before activating external scripts (such as Google Analytics, or anything else). See [https://cookie-bar.eu](https://cookie-bar.eu/) for more informations.

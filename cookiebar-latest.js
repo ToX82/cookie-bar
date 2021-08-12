@@ -1,6 +1,6 @@
 /*
   Plugin Name: Cookie Bar
-  Plugin URL: http://cookie-bar.eu/
+  Plugin URL: https://cookie-bar.eu/
   @author: Emanuele "ToX" Toscano
   @description: Cookie Bar is a free & simple solution to the EU cookie law.
 */
