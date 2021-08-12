@@ -186,7 +186,7 @@ function setupCookieBar() {
    */
   function initCookieBar() {
     // If at least a cookie or localstorage is set, then STARTUP
-    if (document.cookie.length > 0 || window.localStorage.length > 0) {
+    if (document.cookie.length > 0 || (window.localStorage !== null && window.localStorage.length > 0)) {
       var accepted = getCookie();
       if (accepted === undefined) {
         startup = true;
@@ -389,7 +389,9 @@ function setupCookieBar() {
     });
 
     // Clear localStorage
-    localStorage.clear();
+    if (localStorage !== null) {
+      localStorage.clear();
+    }
   }
 
 
