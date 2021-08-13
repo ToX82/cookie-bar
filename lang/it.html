@@ -22,6 +22,26 @@
             <br>
             <br>Cliccando il bottone <span>Non consentire cookies</span> neghi il tuo consenso, eliminando eventuali cookies e dati localStorage già presenti (alcune parti del sito potrebbero smettere di funzionare correttamente).</i><br>
 
+            <i id='cookie-bar-customize-block'>
+                <br>
+                Se preferisci, puoi selezionare quali tipologie di cookies ritieni accettabili:<br>
+                <input type="checkbox" id="cookiebar-technical" checked disabled>
+                <label for="cookiebar-technical">Cookie tecnici (obbligatorio)</label><br>
+
+                <span id="cookiebar-third-party-input">
+                    <input type="checkbox" id="cookiebar-third-party" value="1">
+                    <label for="cookiebar-third-party">Cookie di terze parti</label><br>
+                </span>
+
+                <span id="cookiebar-tracking-input">
+                    <input type="checkbox" id="cookiebar-tracking" value="1">
+                    <label for="cookiebar-tracking">Cookie di profilazione</label><br>
+                </span>
+
+                <button id="cookiebar-save-customized">Salva le mie preferenze</button>
+                <br>
+            </i>
+
             <br>Per saperne di più su cookies e localStorage, visita il sito <a rel='nofollow noopener noreferrer' target='_blank' href='http://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/3118884'>Garante per la protezione dei dati personali</a>.
             <hr>
             Per disabilitare tutti i cookies mediante la configurazione del browser, clicca sull'icona corrispondente e segui le istruzioni indicate:
@@ -47,4 +67,5 @@
     </p>
     <a rel='nofollow noopener noreferrer' id="cookie-bar-button-no">Non consentire cookies</a>
     <a rel='nofollow noopener noreferrer' id="cookie-bar-button">Ho capito</a>
+    <a rel='nofollow noopener noreferrer' id="cookie-bar-button-customize">Personalizza</a>
 </div>

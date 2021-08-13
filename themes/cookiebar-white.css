@@ -231,3 +231,46 @@
 .clear {
     clear: both;
 }
+
+#cookie-bar-prompt input,
+#cookie-bar-prompt label {
+    cursor: pointer;
+    color: #222;
+    position: inherit;
+    pointer-events: all;
+    padding: auto;
+    opacity: 1;
+}
+
+#cookie-bar-prompt #cookie-bar-customize {
+    display: none;
+}
+#cookie-bar-prompt #cookiebar-save-customized,
+#cookie-bar-prompt #cookiebar-save-customized:active {
+    border: none;
+    background-color: #D02828;
+    color: #FFF;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+#cookie-bar-prompt #cookiebar-save-customized:hover {
+    text-decoration: underline;
+}
+#cookie-bar-button-customize {
+    color: #9B1A1A !important;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    font-weight: bold;
+    line-height: 1;
+    margin-right: 20px;
+    margin-top: 2px;
+    padding: 5px 10px 6px;
+    position: relative;
+    text-decoration: none;
+}
+#cookie-bar-prompt i {
+    font-style: normal;
+}

@@ -248,6 +248,13 @@ function setupCookieBar() {
         thirdparty = document.getElementById('cookie-bar-thirdparty');
         tracking = document.getElementById('cookie-bar-tracking');
 
+        customize = document.getElementById('cookie-bar-customize-block');
+        buttonCustomize = document.getElementById('cookie-bar-button-customize');
+        buttonSaveCustomized = document.getElementById('cookiebar-save-customized');
+        customizeBlock = document.getElementById('cookie-bar-customize-block');
+        customizeTracking = document.getElementById('cookiebar-tracking-input');
+        customizeThirdParty = document.getElementById('cookiebar-third-party-input');
+
         scrolling = document.getElementById('cookie-bar-scrolling');
         privacyPage = document.getElementById('cookie-bar-privacy-page');
         privacyLink = document.getElementById('cookie-bar-privacy-link');
@@ -257,6 +264,9 @@ function setupCookieBar() {
           promptNoConsent.style.display = 'none';
           buttonNo.style.display = 'none';
         }
+        if (getURLParameter('showCustomConsent')) {
+          buttonCustomize.style.display = 'none';
+        }
 
         if (getURLParameter('blocking')) {
           fadeIn(prompt, 500);
@@ -265,10 +275,18 @@ function setupCookieBar() {
 
         if (getURLParameter('thirdparty')) {
           thirdparty.style.display = 'block';
+          customizeThirdParty.style.display = 'block';
+        } else {
+          thirdparty.style.display = 'none';
+          customizeThirdParty.style.display = 'none';
         }
 
         if (getURLParameter('tracking')) {
           tracking.style.display = 'block';
+          customizeTracking.style.display = 'block';
+        } else {
+          tracking.style.display = 'none';
+          customizeTracking.style.display = 'none';
         }
 
         if (getURLParameter('hideDetailsBtn')) {
@@ -295,6 +313,14 @@ function setupCookieBar() {
         if (getURLParameter('showPolicyLink') && getURLParameter('privacyPage')) {
           mainBarPrivacyLink.href = getPrivacyPageUrl();
           mainBarPrivacyLink.style.display = 'inline-block';
+        }
+
+        if (getURLParameter('customize')) {
+          customizeBlock.style.display = 'block';
+          buttonCustomize.style.display = 'block';
+        } else {
+          customizeBlock.style.display = 'none';
+          buttonCustomize.style.display = 'none';
         }
 
         setEventListeners();
@@ -510,12 +536,30 @@ function setupCookieBar() {
       }
     });
 
+    buttonSaveCustomized.addEventListener('click', function() {
+      setCookie('cookiebar', 'CookieCustomized');
+      setCookie('cookiebar-tracking', document.getElementById('cookiebar-tracking').checked);
+      setCookie('cookiebar-third-barty', document.getElementById('cookiebar-third-party').checked);
+      clearBodyMargin();
+      fadeOut(prompt, 250);
+      fadeOut(cookieBar, 250);
+      if (getURLParameter('refreshPage')) {
+          window.location.reload();
+      }
+    });
+
     promptBtn.addEventListener('click', function() {
       fadeIn(prompt, 250);
     });
 
     promptClose.addEventListener('click', function() {
+      fadeOut(customize, 0);
       fadeOut(prompt, 250);
+    });
+
+    buttonCustomize.addEventListener('click', function() {
+      fadeIn(customize, 0);
+      fadeIn(prompt, 250);
     });
 
     if (getURLParameter('scrolling')) {
