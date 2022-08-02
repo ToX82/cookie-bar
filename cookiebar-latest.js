@@ -18,6 +18,7 @@ var CookieLanguages = [
   'el',
   'en',
   'es',
+  'et',
   'fi',
   'fr',
   'hr',
