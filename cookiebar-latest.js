@@ -421,6 +421,21 @@ function setupCookieBar() {
     }
   }
 
+  /**
+   * Dispatch CustomEvent for an
+   * easiest developer integration
+   * @param {string} consent - Consent granted, customized or denied by the user
+   * @return null
+   */
+  function dispatchCustomEvent(consent) {
+    document.dispatchEvent(new CustomEvent('cookiebarConsent', {
+      cancelable: true,
+      detail: {
+        consent: consent
+      }
+    }));
+  }
+
 
   /**
    * FadeIn effect
@@ -516,6 +531,7 @@ function setupCookieBar() {
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
+      dispatchCustomEvent('CookieAllowed');
       if (getURLParameter('refreshPage')) {
           window.location.reload();
       }
@@ -534,6 +550,7 @@ function setupCookieBar() {
         clearBodyMargin();
         fadeOut(prompt, 250);
         fadeOut(cookieBar, 250);
+        dispatchCustomEvent('CookieDisallowed');
       }
     });
 
@@ -544,6 +561,7 @@ function setupCookieBar() {
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
+      dispatchCustomEvent('CookieCustomized');
       if (getURLParameter('refreshPage')) {
           window.location.reload();
       }
