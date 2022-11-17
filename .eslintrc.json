@@ -1,0 +1,106 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script",
+        "ecmaFeatures": {
+            "jsx": false,
+            "experimentalObjectRestSpread": false
+        }
+    },
+    "rules": {
+        "curly": [
+            2,
+            "all"
+        ],
+        "operator-linebreak": [
+            2,
+            "after"
+        ],
+        "camelcase": [
+            2,
+            {
+                "properties": "never"
+            }
+        ],
+        "max-len": [
+            2,
+            300
+        ],
+        "indent": [
+            2,
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "no-multi-str": 2,
+        "no-mixed-spaces-and-tabs": 2,
+        "no-trailing-spaces": 2,
+        "space-unary-ops": [
+            2,
+            {
+                "nonwords": false,
+                "overrides": {}
+            }
+        ],
+        "one-var": [
+            2,
+            "never"
+        ],
+        "brace-style": [
+            2,
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "keyword-spacing": [
+            2,
+            {}
+        ],
+        "space-infix-ops": 2,
+        "space-before-blocks": [
+            2,
+            "always"
+        ],
+        "eol-last": 2,
+        "space-before-function-paren": [
+            2,
+            {
+                "anonymous": "ignore",
+                "named": "never"
+            }
+        ],
+        "array-bracket-spacing": [
+            2,
+            "never",
+            {
+                "singleValue": true
+            }
+        ],
+        "space-in-parens": [
+            2,
+            "never"
+        ],
+        "no-multiple-empty-lines": 2,
+        "no-with": 2,
+        "no-spaced-func": 2,
+        "key-spacing": [
+            2,
+            {
+                "beforeColon": false,
+                "afterColon": true
+            }
+        ],
+        "dot-notation": 2,
+        "semi": [
+            2,
+            "always"
+        ],
+        "valid-jsdoc": 2
+    }
+}

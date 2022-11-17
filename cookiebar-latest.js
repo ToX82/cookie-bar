@@ -26,7 +26,7 @@ var CookieLanguages = [
   'it',
   'nl',
   'no',
-  'oc',  
+  'oc',
   'pl',
   'pt',
   'ro',
@@ -73,6 +73,7 @@ var cookieLawStates = [
 
 /**
  * Main function
+ * @returns {void}
  */
 function setupCookieBar() {
   var scriptPath = getScriptPath();
@@ -92,7 +93,7 @@ function setupCookieBar() {
   /**
    * If cookies are disallowed, delete all the cookies at every refresh
    * @param null
-   * @return null
+   * @returns {void}
    */
   if (currentCookieSelection == 'CookieDisallowed') {
     removeCookies();
@@ -111,21 +112,19 @@ function setupCookieBar() {
    * do nothing if cookiebar cookie is set
    * show only for european users
    * @param null
-   * @return null
+   * @returns {void}
    */
 
   // Init cookieBAR without geoip localization, if it was explicitly disabled.
   if (getURLParameter('noGeoIp')) {
     startup = true;
     initCookieBar();
-  }
-
-  // Otherwise execute geoip localization and init cookieBAR afterwards.
-  else {
+  } else {
+    // Otherwise execute geoip localization and init cookieBAR afterwards.
     // If the user is in EU, then STARTUP
     var checkEurope = new XMLHttpRequest();
-    checkEurope.open('GET', 'https://freegeoip.app/json/', true);
-    checkEurope.onreadystatechange = function() {
+    checkEurope.open('GET', 'http://ip-api.com/json/', true);
+    checkEurope.onreadystatechange = function () {
       // Don't process anything else besides finished requests.
       if (checkEurope.readyState !== 4) {
         return;
@@ -136,7 +135,7 @@ function setupCookieBar() {
 
       // Process response on case of a successful request.
       if (checkEurope.status === 200) {
-        var country = JSON.parse(checkEurope.responseText).country_code;
+        var country = JSON.parse(checkEurope.responseText).countryCode;
         if (cookieLawStates.indexOf(country) > -1) {
           startup = true;
         } else {
@@ -147,10 +146,8 @@ function setupCookieBar() {
             window.location.reload();
           }
         }
-      }
-
-      // Enforce startup, if the webservice returned an error.
-      else {
+      } else {
+        // Enforce startup, if the webservice returned an error.
         startup = true;
       }
 
@@ -167,7 +164,7 @@ function setupCookieBar() {
 
       // Make sure, that checkEurope.onreadystatechange() is not called anymore
       // in order to avoid possible multiple executions of initCookieBar().
-      checkEurope.onreadystatechange = function() {};
+      checkEurope.onreadystatechange = function () { };
 
       // Abort geoip localization.
       checkEurope.abort();
@@ -183,7 +180,7 @@ function setupCookieBar() {
 
   /**
    * Initialize cookieBAR according to the startup / shutup values.
-   * @return null
+   * @returns {void}
    */
   function initCookieBar() {
     // If at least a cookie or localstorage is set, then STARTUP
@@ -210,7 +207,7 @@ function setupCookieBar() {
 
   /**
    * Load external files (css, language files etc.)
-   * @return null
+   * @returns {void}
    */
   function startCookieBar() {
     var userLang = detectLang();
@@ -230,7 +227,7 @@ function setupCookieBar() {
     // Load the correct language messages file and set some variables
     var request = new XMLHttpRequest();
     request.open('GET', path + 'lang/' + userLang + '.html', true);
-    request.onreadystatechange = function() {
+    request.onreadystatechange = function () {
       if (request.readyState === 4 && request.status === 200) {
         var element = document.createElement('div');
         element.innerHTML = request.responseText;
@@ -391,7 +388,7 @@ function setupCookieBar() {
    * Write cookieBar's cookie when user accepts cookies :)
    * @param {string} name - cookie name
    * @param {string} value - cookie value
-   * @return null
+   * @returns {void}
    */
   function setCookie(name, value) {
     var exdays = 30;
@@ -407,11 +404,11 @@ function setupCookieBar() {
 
   /**
    * Remove all the cookies and empty localStorage when user refuses cookies
-   * @return null
+   * @returns {void}
    */
   function removeCookies() {
     // Clear cookies
-    document.cookie.split(';').forEach(function(c) {
+    document.cookie.split(';').forEach(function (c) {
       document.cookie = c.replace(/^\ +/, '').replace(/\=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
     });
 
@@ -425,7 +422,7 @@ function setupCookieBar() {
    * Dispatch CustomEvent for an
    * easiest developer integration
    * @param {string} consent - Consent granted, customized or denied by the user
-   * @return null
+   * @returns {void}
    */
   function dispatchCustomEvent(consent) {
     document.dispatchEvent(new CustomEvent('cookiebarConsent', {
@@ -441,7 +438,7 @@ function setupCookieBar() {
    * FadeIn effect
    * @param {HTMLElement} el - Element
    * @param {number} speed - effect duration
-   * @return null
+   * @returns {void}
    */
   function fadeIn(el, speed) {
     var s = el.style;
@@ -457,7 +454,7 @@ function setupCookieBar() {
    * FadeOut effect
    * @param {HTMLElement} el - Element
    * @param {number} speed - effect duration
-   * @return null
+   * @returns {void}
    */
   function fadeOut(el, speed) {
     var s = el.style;
@@ -469,11 +466,11 @@ function setupCookieBar() {
 
   /**
    * Add a body tailored bottom (or top) margin so that CookieBar doesn't hide anything
-   * @param {String} where
-   * @return null
+   * @param {String} where Top or bottom margin
+   * @returns {void}
    */
-   function setBodyMargin(where) {
-      setTimeout(function () {
+  function setBodyMargin(where) {
+    setTimeout(function () {
 
       var height = document.getElementById('cookie-bar').clientHeight;
 
@@ -493,7 +490,7 @@ function setupCookieBar() {
 
   /**
    * Clear the bottom (or top) margin when the user closes the CookieBar
-   * @return null
+   * @returns {void}
    */
   function clearBodyMargin() {
     var height = document.getElementById('cookie-bar').clientHeight;
@@ -503,7 +500,7 @@ function setupCookieBar() {
       document.getElementsByTagName('body')[0].style.marginTop = currentTop - height + 'px';
     } else {
       var currentBottom = parseInt(document.getElementsByTagName('body')[0].style.marginBottom);
-      document.getElementsByTagName('body')[0].style.marginBottom = currentBottom -height + 'px';
+      document.getElementsByTagName('body')[0].style.marginBottom = currentBottom - height + 'px';
     }
   }
 
@@ -523,21 +520,21 @@ function setupCookieBar() {
 
   /**
    * Set button actions (event listeners)
-   * @return null
+   * @returns {void}
    */
   function setEventListeners() {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       setCookie('cookiebar', 'CookieAllowed');
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
       dispatchCustomEvent('CookieAllowed');
       if (getURLParameter('refreshPage')) {
-          window.location.reload();
+        window.location.reload();
       }
     });
 
-    buttonNo.addEventListener('click', function() {
+    buttonNo.addEventListener('click', function () {
       var txt = promptNoConsent.textContent.trim();
       var confirm = true;
       if (!getURLParameter('noConfirm')) {
@@ -554,7 +551,7 @@ function setupCookieBar() {
       }
     });
 
-    buttonSaveCustomized.addEventListener('click', function() {
+    buttonSaveCustomized.addEventListener('click', function () {
       setCookie('cookiebar', 'CookieCustomized');
       setCookie('cookiebar-tracking', document.getElementById('cookiebar-tracking').checked);
       setCookie('cookiebar-third-barty', document.getElementById('cookiebar-third-party').checked);
@@ -563,20 +560,20 @@ function setupCookieBar() {
       fadeOut(cookieBar, 250);
       dispatchCustomEvent('CookieCustomized');
       if (getURLParameter('refreshPage')) {
-          window.location.reload();
+        window.location.reload();
       }
     });
 
-    promptBtn.addEventListener('click', function() {
+    promptBtn.addEventListener('click', function () {
       fadeIn(prompt, 250);
     });
 
-    promptClose.addEventListener('click', function() {
+    promptClose.addEventListener('click', function () {
       fadeOut(customize, 0);
       fadeOut(prompt, 250);
     });
 
-    buttonCustomize.addEventListener('click', function() {
+    buttonCustomize.addEventListener('click', function () {
       fadeIn(customize, 0);
       fadeIn(prompt, 250);
     });
@@ -584,7 +581,7 @@ function setupCookieBar() {
     if (getURLParameter('scrolling')) {
       var scrollPos = document.body.getBoundingClientRect().top;
       var scrolled = false;
-      window.addEventListener('scroll', function() {
+      window.addEventListener('scroll', function () {
         if (scrolled === false) {
           if (document.body.getBoundingClientRect().top - scrollPos > 250 || document.body.getBoundingClientRect().top - scrollPos < -250) {
             setCookie('cookiebar', 'CookieAllowed');
@@ -593,7 +590,7 @@ function setupCookieBar() {
             fadeOut(cookieBar, 250);
             scrolled = true;
             if (getURLParameter('refreshPage')) {
-                window.location.reload();
+              window.location.reload();
             }
           }
         }
@@ -603,6 +600,6 @@ function setupCookieBar() {
 }
 
 // Load the script only if there is at least a cookie or a localStorage item
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   setupCookieBar();
 });
