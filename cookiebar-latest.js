@@ -554,7 +554,7 @@ function setupCookieBar() {
     buttonSaveCustomized.addEventListener('click', function () {
       setCookie('cookiebar', 'CookieCustomized');
       setCookie('cookiebar-tracking', document.getElementById('cookiebar-tracking').checked);
-      setCookie('cookiebar-third-barty', document.getElementById('cookiebar-third-party').checked);
+      setCookie('cookiebar-third-party', document.getElementById('cookiebar-third-party').checked);
       clearBodyMargin();
       fadeOut(prompt, 250);
       fadeOut(cookieBar, 250);
