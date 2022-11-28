@@ -123,7 +123,7 @@ function setupCookieBar() {
     // Otherwise execute geoip localization and init cookieBAR afterwards.
     // If the user is in EU, then STARTUP
     var checkEurope = new XMLHttpRequest();
-    checkEurope.open('GET', 'http://ip-api.com/json/', true);
+    checkEurope.open('GET', 'https://ip-api.com/json/', true);
     checkEurope.onreadystatechange = function () {
       // Don't process anything else besides finished requests.
       if (checkEurope.readyState !== 4) {
