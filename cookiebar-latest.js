@@ -34,7 +34,8 @@ var CookieLanguages = [
   'se',
   'sk',
   'sl',
-  'tr'
+  'tr',
+  'uk',
 ];
 
 var cookieLawStates = [
