@@ -124,7 +124,7 @@ function setupCookieBar() {
     // Otherwise execute geoip localization and init cookieBAR afterwards.
     // If the user is in EU, then STARTUP
     var checkEurope = new XMLHttpRequest();
-    checkEurope.open('GET', 'http://ip-api.com/json/', true);
+    checkEurope.open('GET', 'https://ipapi.co/country', true);
     checkEurope.onreadystatechange = function () {
       // Don't process anything else besides finished requests.
       if (checkEurope.readyState !== 4) {
@@ -136,7 +136,7 @@ function setupCookieBar() {
 
       // Process response on case of a successful request.
       if (checkEurope.status === 200) {
-        var country = JSON.parse(checkEurope.responseText).countryCode;
+        var country = checkEurope.responseText;
         if (cookieLawStates.indexOf(country) > -1) {
           startup = true;
         } else {
