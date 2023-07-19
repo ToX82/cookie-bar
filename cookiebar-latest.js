@@ -348,7 +348,7 @@ function setupCookieBar() {
     for (i = 0; i < scripts.length; i += 1) {
       if (scripts[i].hasAttribute('src')) {
         path = scripts[i].src;
-        if (path.indexOf('cookiebar') > -1) {
+        if (path.indexOf('cookiebar-latest') > -1) {         
           return path;
         }
       }
